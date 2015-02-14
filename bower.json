@@ -1,0 +1,22 @@
+{
+  "name": "rethink-chat",
+  "version": "0.0.0",
+  "homepage": "https://github.com/thejsj/dotfiles",
+  "authors": [
+    "thejsj <jorge.silva@thejsj.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass-official": "~3.3.3",
+    "bootstrap": "~3.3.2",
+    "socket.io": "~1.3.3"
+  }
+}
