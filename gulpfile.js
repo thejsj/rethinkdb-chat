@@ -24,13 +24,13 @@ gulp.task('browserify', function(){
         var updateStart = Date.now();
         watcher.bundle() // Create new bundle that uses the cache for high performance
         .pipe(source('main.js'))
-        .pipe(streamify(uglify()))
+        // .pipe(streamify(uglify()))
         .pipe(gulp.dest('./client/dist/'));
         console.log('Updated!', (Date.now() - updateStart) + 'ms');
     })
     .bundle() // Create the initial bundle when starting the task
     .pipe(source('main.js'))
-    .pipe(streamify(uglify()))
+    // .pipe(streamify(uglify()))
     .pipe(gulp.dest('./client/dist/'));
 });
 
