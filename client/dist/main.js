@@ -44,9 +44,6 @@ module.exports = ChatView;
 },{"./message-collection-view":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/client/src/js/views/message-collection-view.js","./new-message-form-view":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/client/src/js/views/new-message-form-view.js","react":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/react.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/client/src/js/views/message-collection-view.js":[function(require,module,exports){
 'use strict';
 var React = require('react');
-
-'use strict';
-var React = require('react');
 var _ = require('lodash');
 
 var MessageCollectionView = React.createClass({displayName: "MessageCollectionView",
@@ -56,11 +53,11 @@ var MessageCollectionView = React.createClass({displayName: "MessageCollectionVi
       React.createElement("div", {className: "message-collection-container"}, 
         messageCollection.map(function(item, i) {
           return (
-            React.createElement("div", {className: "panel panel-default message"}, 
-              React.createElement("div", {className: "panel-heading"}, 
+            React.createElement("div", {className: "message"}, 
+              React.createElement("div", {className: "message-heading"}, 
                 React.createElement("a", {href: "#"},  item.user)
               ), 
-              React.createElement("div", {className: "panel-body"}, 
+              React.createElement("div", {className: "message-body"}, 
                 React.createElement("p", null,  item.message)
               )
             )
@@ -80,7 +77,7 @@ var React = require('react');
 
 var NewMessageFormView = React.createClass({displayName: "NewMessageFormView",
   getInitialState: function() {
-    return {value: 'Hello!'};
+    return {value: ''};
   },
   handleChange: function () {
     this.setState({value: event.target.value});
@@ -99,8 +96,8 @@ var NewMessageFormView = React.createClass({displayName: "NewMessageFormView",
     return (
       React.createElement("form", {id: "message-form", onSubmit:  this.handleSubmit}, 
         React.createElement("div", {class: "form-group"}, 
-          React.createElement("input", {type: "text", className: "form-control", value: value, onChange: this.handleChange, placeholder: "Your Message Here"}), 
-          React.createElement("input", {type: "submit", className: "btn btn-default"})
+          React.createElement("input", {type: "submit", className: "btn btn-default"}), 
+          React.createElement("input", {type: "text", className: "form-control", value: value, onChange: this.handleChange, placeholder: "Your Message Here"})
         )
       )
     );

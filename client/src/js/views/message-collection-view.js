@@ -1,8 +1,5 @@
 'use strict';
 var React = require('react');
-
-'use strict';
-var React = require('react');
 var _ = require('lodash');
 
 var MessageCollectionView = React.createClass({
@@ -12,11 +9,11 @@ var MessageCollectionView = React.createClass({
       <div className='message-collection-container'>
         {messageCollection.map(function(item, i) {
           return (
-            <div className='panel panel-default message'>
-              <div className='panel-heading'>
+            <div className='message'>
+              <div className='message-heading'>
                 <a href="#">{ item.user }</a>
               </div>
-              <div className='panel-body'>
+              <div className='message-body'>
                 <p>{ item.message }</p>
               </div>
             </div>

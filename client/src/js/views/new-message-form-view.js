@@ -3,7 +3,7 @@ var React = require('react');
 
 var NewMessageFormView = React.createClass({
   getInitialState: function() {
-    return {value: 'Hello!'};
+    return {value: ''};
   },
   handleChange: function () {
     this.setState({value: event.target.value});
@@ -22,8 +22,8 @@ var NewMessageFormView = React.createClass({
     return (
       <form id='message-form' onSubmit={ this.handleSubmit }>
         <div class="form-group">
-          <input type='text' className="form-control" value={value} onChange={this.handleChange} placeholder='Your Message Here' />
           <input type='submit' className="btn btn-default" />
+          <input type='text' className="form-control" value={value} onChange={this.handleChange} placeholder='Your Message Here' />
         </div>
       </form>
     );

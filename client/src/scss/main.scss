@@ -1,3 +1,36 @@
-#message-form textarea {
-  margin-bottom: 10px;
+
+$chat-box-height: 40px;
+
+#container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+
+  #message-form {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    background: white;
+    height: $chat-box-height;
+    border-top: solid 1px #f2f2f2;
+    $submit-button-width: 100px;
+
+    input[type='text'] {
+      margin-bottom: 10px;
+      width: calc(100% - #{$submit-button-width});
+    }
+
+    input[type='submit'] {
+      width: $submit-button-width;
+      float: right;
+    }
+  }
+
+  .message-collection-container {
+    padding-top: 10px;
+    height: calc(100vh - #{$chat-box-height});
+    overflow-y: scroll;
+  }
 }

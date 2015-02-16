@@ -1,2 +1,23 @@
-#message-form textarea {
-  margin-bottom: 10px; }
+#container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden; }
+  #container #message-form {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    background: white;
+    height: 40px;
+    border-top: solid 1px #f2f2f2; }
+    #container #message-form input[type='text'] {
+      margin-bottom: 10px;
+      width: calc(100% - 100px); }
+    #container #message-form input[type='submit'] {
+      width: 100px;
+      float: right; }
+  #container .message-collection-container {
+    padding-top: 10px;
+    height: calc(100vh - 40px);
+    overflow-y: scroll; }
