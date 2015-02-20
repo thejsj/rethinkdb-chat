@@ -7,7 +7,7 @@ var ChatView = React.createClass({
   render: function () {
     return (
       <div>
-        <NewMessageFormView socket={ this.props.socket }/>
+        <NewMessageFormView socket={ this.props.socket } userName={ this.props.userName }/>
         <MessageCollectionView messageCollection={ this.props.messageCollection }/>
       </div>
     );

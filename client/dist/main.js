@@ -7,9 +7,11 @@ var socket = io.connect('http://localhost:8000');
 var messageCollection = [];
 var ChatView = require('./views/chat-view');
 
+var userName = prompt('Pick a username');
+
 var render = function () {
   React.render(
-    React.createElement(ChatView, {messageCollection: messageCollection, socket: socket }),
+    React.createElement(ChatView, {messageCollection: messageCollection, socket: socket, userName: userName }),
     document.getElementById('container')
   );
 };
@@ -31,7 +33,7 @@ var ChatView = React.createClass({displayName: "ChatView",
   render: function () {
     return (
       React.createElement("div", null, 
-        React.createElement(NewMessageFormView, {socket:  this.props.socket}), 
+        React.createElement(NewMessageFormView, {socket:  this.props.socket, userName:  this.props.userName}), 
         React.createElement(MessageCollectionView, {messageCollection:  this.props.messageCollection})
       )
     );
@@ -49,16 +51,18 @@ var _ = require('lodash');
 var MessageCollectionView = React.createClass({displayName: "MessageCollectionView",
   render: function() {
     var messageCollection = this.props.messageCollection;
+    setTimeout(function () {
+      // I'm on the train and can't google a better way to do this....
+      var div = document.querySelector('.message-collection-container');
+      div.scrollTop = Infinity;
+    });
     return (
       React.createElement("div", {className: "message-collection-container"}, 
         messageCollection.map(function(item, i) {
           return (
             React.createElement("div", {className: "message"}, 
-              React.createElement("div", {className: "message-heading"}, 
-                React.createElement("a", {href: "#"},  item.user)
-              ), 
               React.createElement("div", {className: "message-body"}, 
-                React.createElement("p", null,  item.message)
+                React.createElement("p", null, React.createElement("a", {href: "#"},  item.user), ": ",  item.message)
               )
             )
           );
@@ -87,7 +91,7 @@ var NewMessageFormView = React.createClass({displayName: "NewMessageFormView",
     var text = this.state.value;
     this.props.socket.emit('message', {
       message: text,
-      user: 'thejsj'
+      userName: this.props.userName
     });
     this.state.value = '';
   },

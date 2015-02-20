@@ -39,7 +39,7 @@ io.on('connection', function (socket) {
   socket.on('message', function (data) {
     r.table('messages').insert({
       message: data.message,
-      user: 'thejsj',
+      user: data.userName,
       created: (new Date()).getTime()
     }).run();
   });

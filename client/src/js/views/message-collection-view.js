@@ -5,16 +5,18 @@ var _ = require('lodash');
 var MessageCollectionView = React.createClass({
   render: function() {
     var messageCollection = this.props.messageCollection;
+    setTimeout(function () {
+      // I'm on the train and can't google a better way to do this....
+      var div = document.querySelector('.message-collection-container');
+      div.scrollTop = Infinity;
+    });
     return (
       <div className='message-collection-container'>
         {messageCollection.map(function(item, i) {
           return (
             <div className='message'>
-              <div className='message-heading'>
-                <a href="#">{ item.user }</a>
-              </div>
               <div className='message-body'>
-                <p>{ item.message }</p>
+                <p><a href="#">{ item.user }</a>: { item.message }</p>
               </div>
             </div>
           );

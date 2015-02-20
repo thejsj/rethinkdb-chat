@@ -13,7 +13,7 @@ var NewMessageFormView = React.createClass({
     var text = this.state.value;
     this.props.socket.emit('message', {
       message: text,
-      user: 'thejsj'
+      userName: this.props.userName
     });
     this.state.value = '';
   },
