@@ -1,12 +1,9 @@
 /*jshint node:true */
 'use strict';
 
+var config = require('config');
 var q = require('q');
-var r = require('rethinkdbdash')({
-  host: 'localhost',
-  port: 28015,
-  db: 'rethink_chat'
-});
+var r = require('rethinkdbdash')(config.get('rethinkdb'));
 
 // Create Tables
 r.tableList().run()
