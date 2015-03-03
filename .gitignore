@@ -6,3 +6,4 @@ config
 fabfile.py
 !config/default.js
 !config/docker-local.js
+*.mov
