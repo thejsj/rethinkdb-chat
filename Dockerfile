@@ -8,17 +8,25 @@
 FROM dockerfile/nodejs
 
 # Set instructions on build.
-ONBUILD ADD package.json /app/
-ONBUILD ADD package.json /
-ONBUILD RUN npm install
-ONBUILD ADD . /app
+RUN npm install -g gulp bower node-sass
+RUN npm cache clean
 
 # Define working directory.
 WORKDIR /app
+ADD ./package.json /app/package.json
+RUN npm install
 
-# Define default command.
-CMD ["echo", "$(ls)"]
-CMD ["npm", "start"]
+WORKDIR /
+ADD . ./app
+
+WORKDIR /app
+RUN bower install --allow-root
+ADD run.sh /run.sh
+RUN chmod -R 777 /run.sh
+RUN chmod +x /run.sh
 
 # Expose ports.
-EXPOSE 8080
+EXPOSE 80
+
+WORKDIR /app
+ENTRYPOINT ["/run.sh"]

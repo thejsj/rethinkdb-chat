@@ -5,7 +5,8 @@
  */
 var config = {
   'rethinkdb': {
-    'host': process.env.DB_PORT_3306_TCP_ADDR,
+    'host': process.env.RETHINKDB_PORT_28015_TCP_ADDR,
+    'port': process.env.RETHINKDB_PORT_28015_TCP_PORT
   },
   'ports' : {
     'http' : process.env.PORT

@@ -26,6 +26,9 @@ r.tableList().run()
               return r.table('messages').indexCreate('created');
             }
           });
+      })
+      .catch(function (err) {
+        console.log('Error creating tables', err);
       });
   });
 

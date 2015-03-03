@@ -1,17 +1,23 @@
 /*jshint node:true */
 'use strict';
-// console.log(process);
+
 var config = require('config');
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var r = require('./db');
+var clientConfigParser = require('./clientConfigParser');
+
+console.log('config');
+console.log(config);
 
 server.listen(config.get('ports').http);
 
 // Static Dirname
-app.use(express.static(__dirname + '/../client'));
+app
+  .use('/config.js', clientConfigParser)
+  .use(express.static(__dirname + '/../client'));
 
 io.on('connection', function (socket) {
 
@@ -26,19 +32,13 @@ io.on('connection', function (socket) {
 
   // Listen to new message being inserted
   r.table('messages')
-    .coerceTo('array')
     .changes().run()
     .then(function(cursor) {
-      console.log('New Cursor');
       cursor.each(function (err, row) {
-        console.log('New Message');
         socket.emit('message', row.new_val);
       }, function () {
         console.log('Finished');
       });
-    })
-    .catch(function (err) {
-      console.log('err', err);
     });
 
   // Insert new messages
