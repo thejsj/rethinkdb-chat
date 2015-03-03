@@ -4,6 +4,7 @@ node_modules
 client/lib
 config
 fabfile.py
+*.pyc
 !config/default.js
 !config/docker-local.js
 *.mov
