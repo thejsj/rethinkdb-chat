@@ -6,7 +6,16 @@ var q = require('q');
 var r = require('rethinkdbdash')(config.get('rethinkdb'));
 
 // Create Tables
-r.tableList().run()
+r.dbList().run()
+  .then(function (dbList) {
+    if (dbList.indexOf(config.get('rethinkdb').db) === -1) {
+      return r.dbCreate(config.get('rethinkdb').db).run();
+    }
+    return true;
+  })
+  .then(function () {
+    return r.tableList().run();
+  })
   .then(function (tableList) {
     return q()
       .then(function() {
