@@ -17,6 +17,7 @@ var render = function () {
 render();
 
 socket.on('message', function (message) {
+  console.log('Message', message);
   messageCollection.push(message);
   render();
 });

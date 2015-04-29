@@ -11,6 +11,7 @@ var NewMessageFormView = React.createClass({
   handleSubmit: function (e) {
     e.preventDefault();
     var text = this.state.value;
+    console.log(text);
     this.props.socket.emit('message', {
       message: text,
       userName: this.props.userName

@@ -18,7 +18,7 @@
     "q": "^1.1.2",
     "react": "^0.12.2",
     "rethinkdb": "^1.16.0",
-    "rethinkdbdash": "^1.16.10",
+    "rethinkdb-init": "0.0.2",
     "socket.io": "^1.3.4"
   },
   "devDependencies": {
@@ -31,7 +31,6 @@
     "nodemon": "^1.3.7",
     "reactify": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "watchify": "^2.3.0",
-    "node-sass": "1.0.3"
+    "watchify": "^2.3.0"
   }
 }

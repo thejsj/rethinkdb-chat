@@ -9,7 +9,7 @@ var reactify = require('reactify');
 var uglify = require('gulp-uglify');
 var streamify = require('gulp-streamify');
 
-var sass = require('gulp-sass');
+// var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 
 gulp.task('watchify', function(){
@@ -47,20 +47,20 @@ gulp.task('browserify', function(){
     .pipe(gulp.dest('./client/dist/'));
 });
 
-gulp.task('sass', function () {
-  gulp.src([
-      'client/src/scss/main.scss'
-    ])
-    .pipe(sass({
-      errLogToConsole: false
-    }))
-    .pipe(concat('main.css'))
-    .pipe(gulp.dest('./client/dist/'));
-});
+//gulp.task('sass', function () {
+  //gulp.src([
+      //'client/src/scss/main.scss'
+    //])
+    //.pipe(sass({
+      //errLogToConsole: false
+    //}))
+    //.pipe(concat('main.css'))
+    //.pipe(gulp.dest('./client/dist/'));
+//});
 
-gulp.task('watch', ['browserify', 'sass'], function () {
-  gulp.watch('./client/src/scss/**/*.scss', ['sass']);
+gulp.task('watch', ['browserify'], function () {
+  // gulp.watch('./client/src/scss/**/*.scss', ['sass']);
   gulp.watch('./client/src/js/**/*.js', ['watchify']);
 });
 
-gulp.task('default', ['browserify', 'sass']);
+gulp.task('default', ['browserify' ]);

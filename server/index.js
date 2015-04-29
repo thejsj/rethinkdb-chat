@@ -23,7 +23,7 @@ io.on('connection', function (socket) {
 
   r.table('messages')
     .orderBy({index: 'created'})
-    .run()
+    .run(r.conn)
     .then(function (messages) {
       messages.forEach(function (message) {
         socket.emit('message', message);
@@ -31,14 +31,17 @@ io.on('connection', function (socket) {
     });
 
   // Listen to new message being inserted
-  r.table('messages')
-    .changes().run()
-    .then(function(cursor) {
-      cursor.each(function (err, row) {
-        socket.emit('message', row.new_val);
-      }, function () {
-        console.log('Finished');
-      });
+  r.connect(config.get('rethinkdb'))
+    .then(function (conn) {
+      r.table('messages')
+        .changes().run(conn)
+        .then(function(cursor) {
+          cursor.each(function (err, row) {
+            socket.emit('message', row.new_val);
+          }, function () {
+            console.log('Finished');
+          });
+        });
     });
 
   // Insert new messages
@@ -47,7 +50,7 @@ io.on('connection', function (socket) {
       message: data.message,
       user: data.userName,
       created: (new Date()).getTime()
-    }).run();
+    }).run(r.conn);
   });
 
 });
