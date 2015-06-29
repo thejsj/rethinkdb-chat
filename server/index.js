@@ -23,6 +23,7 @@ io.on('connection', function (socket) {
 
   r.table('messages')
     .orderBy({index: 'created'})
+    .coerceTo('array')
     .run(r.conn)
     .then(function (messages) {
       messages.forEach(function (message) {
