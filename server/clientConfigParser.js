@@ -4,7 +4,7 @@ var config = require('config');
 
 var clientConfigParser = function (req, res) {
   var _config = {
-    'ports': config.get('ports'),
+    'ports': config.get('client_ports') || config.get('ports'),
     'url': config.get('url')
   };
   var str = 'window.config = ' + JSON.stringify(_config) + ';';

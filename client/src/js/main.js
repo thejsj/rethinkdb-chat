@@ -2,7 +2,9 @@
 'use strict';
 var React = require('react');
 
-var socket = io.connect('http://' + window.config.url + ':' + window.config.ports.http);
+console.log('HELLO!!!!!');
+console.log(window.location.href);
+var socket = io.connect(window.location.href);
 var messageCollection = [];
 var ChatView = require('./views/chat-view');
 

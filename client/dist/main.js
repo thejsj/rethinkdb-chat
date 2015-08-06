@@ -3,7 +3,9 @@
 'use strict';
 var React = require('react');
 
-var socket = io.connect('http://' + window.config.url + ':' + window.config.ports.http);
+console.log('HELLO!!!!!');
+console.log(window.location.href);
+var socket = io.connect(window.location.href);
 var messageCollection = [];
 var ChatView = require('./views/chat-view');
 
@@ -25,7 +27,7 @@ socket.on('message', function (message) {
 
 
 
-},{"./views/chat-view":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/client/src/js/views/chat-view.js","react":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/react.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/client/src/js/views/chat-view.js":[function(require,module,exports){
+},{"./views/chat-view":"/opt/app/client/src/js/views/chat-view.js","react":"/opt/app/node_modules/react/react.js"}],"/opt/app/client/src/js/views/chat-view.js":[function(require,module,exports){
 'use strict';
 var React = require('react');
 var MessageCollectionView = require('./message-collection-view');
@@ -45,7 +47,7 @@ var ChatView = React.createClass({displayName: "ChatView",
 module.exports = ChatView;
 
 
-},{"./message-collection-view":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/client/src/js/views/message-collection-view.js","./new-message-form-view":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/client/src/js/views/new-message-form-view.js","react":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/react.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/client/src/js/views/message-collection-view.js":[function(require,module,exports){
+},{"./message-collection-view":"/opt/app/client/src/js/views/message-collection-view.js","./new-message-form-view":"/opt/app/client/src/js/views/new-message-form-view.js","react":"/opt/app/node_modules/react/react.js"}],"/opt/app/client/src/js/views/message-collection-view.js":[function(require,module,exports){
 'use strict';
 var React = require('react');
 var _ = require('lodash');
@@ -77,7 +79,7 @@ var MessageCollectionView = React.createClass({displayName: "MessageCollectionVi
 module.exports = MessageCollectionView;
 
 
-},{"lodash":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/lodash/index.js","react":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/react.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/client/src/js/views/new-message-form-view.js":[function(require,module,exports){
+},{"lodash":"/opt/app/node_modules/lodash/index.js","react":"/opt/app/node_modules/react/react.js"}],"/opt/app/client/src/js/views/new-message-form-view.js":[function(require,module,exports){
 'use strict';
 var React = require('react');
 
@@ -115,7 +117,7 @@ module.exports = NewMessageFormView;
 
 
 
-},{"react":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/react.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
+},{"react":"/opt/app/node_modules/react/react.js"}],"/opt/app/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -175,11 +177,11 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/lodash/index.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/lodash/index.js":[function(require,module,exports){
 (function (global){
 /**
  * @license
- * lodash 3.7.0 (Custom Build) <https://lodash.com/>
+ * lodash 3.9.3 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern -d -o ./index.js`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -192,7 +194,7 @@ process.umask = function() { return 0; };
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '3.7.0';
+  var VERSION = '3.9.3';
 
   /** Used to compose bitmasks for wrapper metadata. */
   var BIND_FLAG = 1,
@@ -267,7 +269,7 @@ process.umask = function() { return 0; };
       reInterpolate = /<%=([\s\S]+?)%>/g;
 
   /** Used to match property names within property paths. */
-  var reIsDeepProp = /\.|\[(?:[^[\]]+|(["'])(?:(?!\1)[^\n\\]|\\.)*?)\1\]/,
+  var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\n\\]|\\.)*?\1)\]/,
       reIsPlainProp = /^\w*$/,
       rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g;
 
@@ -296,6 +298,9 @@ process.umask = function() { return 0; };
 
   /** Used to detect host constructors (Safari > 5). */
   var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+  /** Used to detect unsigned integer values. */
+  var reIsUint = /^\d+$/;
 
   /** Used to match latin-1 supplementary letters (excluding mathematical operators). */
   var reLatin1 = /[\xc0-\xd6\xd8-\xde\xdf-\xf6\xf8-\xff]/g;
@@ -331,9 +336,8 @@ process.umask = function() { return 0; };
     'Array', 'ArrayBuffer', 'Date', 'Error', 'Float32Array', 'Float64Array',
     'Function', 'Int8Array', 'Int16Array', 'Int32Array', 'Math', 'Number',
     'Object', 'RegExp', 'Set', 'String', '_', 'clearTimeout', 'document',
-    'isFinite', 'parseInt', 'setTimeout', 'TypeError', 'Uint8Array',
-    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap',
-    'window'
+    'isFinite', 'parseFloat', 'parseInt', 'setTimeout', 'TypeError', 'Uint8Array',
+    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap', 'window'
   ];
 
   /** Used to make template sourceURLs easier to identify. */
@@ -454,7 +458,7 @@ process.umask = function() { return 0; };
   /**
    * Used as a reference to the global object.
    *
-   * The `this` value is used if it is the global object to avoid Greasemonkey's
+   * The `this` value is used if it's the global object to avoid Greasemonkey's
    * restricted `window` object, otherwise the `window` object is used.
    */
   var root = freeGlobal || ((freeWindow !== (this && this.window)) && freeWindow) || freeSelf || this;
@@ -466,19 +470,28 @@ process.umask = function() { return 0; };
    * sorts them in ascending order without guaranteeing a stable sort.
    *
    * @private
-   * @param {*} value The value to compare to `other`.
-   * @param {*} other The value to compare to `value`.
+   * @param {*} value The value to compare.
+   * @param {*} other The other value to compare.
    * @returns {number} Returns the sort order indicator for `value`.
    */
   function baseCompareAscending(value, other) {
     if (value !== other) {
-      var valIsReflexive = value === value,
+      var valIsNull = value === null,
+          valIsUndef = value === undefined,
+          valIsReflexive = value === value;
+
+      var othIsNull = other === null,
+          othIsUndef = other === undefined,
           othIsReflexive = other === other;
 
-      if (value > other || !valIsReflexive || (value === undefined && othIsReflexive)) {
+      if ((value > other && !othIsNull) || !valIsReflexive ||
+          (valIsNull && !othIsUndef && othIsReflexive) ||
+          (valIsUndef && othIsReflexive)) {
         return 1;
       }
-      if (value < other || !othIsReflexive || (other === undefined && valIsReflexive)) {
+      if ((value < other && !valIsNull) || !othIsReflexive ||
+          (othIsNull && !valIsUndef && valIsReflexive) ||
+          (othIsUndef && valIsReflexive)) {
         return -1;
       }
     }
@@ -546,7 +559,7 @@ process.umask = function() { return 0; };
   }
 
   /**
-   * Converts `value` to a string if it is not one. An empty string is returned
+   * Converts `value` to a string if it's not one. An empty string is returned
    * for `null` or `undefined` values.
    *
    * @private
@@ -558,17 +571,6 @@ process.umask = function() { return 0; };
       return value;
     }
     return value == null ? '' : (value + '');
-  }
-
-  /**
-   * Used by `_.max` and `_.min` as the default callback for string values.
-   *
-   * @private
-   * @param {string} string The string to inspect.
-   * @returns {number} Returns the code unit of the first character of the string.
-   */
-  function charAtCallback(string) {
-    return string.charCodeAt(0);
   }
 
   /**
@@ -893,7 +895,7 @@ process.umask = function() { return 0; };
         stringProto = String.prototype;
 
     /** Used to detect DOM support. */
-    var document = (document = context.window) && document.document;
+    var document = (document = context.window) ? document.document : null;
 
     /** Used to resolve the decompiled source of functions. */
     var fnToString = Function.prototype.toString;
@@ -915,26 +917,24 @@ process.umask = function() { return 0; };
 
     /** Used to detect if a method is native. */
     var reIsNative = RegExp('^' +
-      escapeRegExp(objToString)
-      .replace(/toString|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+      escapeRegExp(fnToString.call(hasOwnProperty))
+      .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
     );
 
     /** Native method references. */
-    var ArrayBuffer = isNative(ArrayBuffer = context.ArrayBuffer) && ArrayBuffer,
-        bufferSlice = isNative(bufferSlice = ArrayBuffer && new ArrayBuffer(0).slice) && bufferSlice,
+    var ArrayBuffer = getNative(context, 'ArrayBuffer'),
+        bufferSlice = getNative(ArrayBuffer && new ArrayBuffer(0), 'slice'),
         ceil = Math.ceil,
         clearTimeout = context.clearTimeout,
         floor = Math.floor,
-        getOwnPropertySymbols = isNative(getOwnPropertySymbols = Object.getOwnPropertySymbols) && getOwnPropertySymbols,
-        getPrototypeOf = isNative(getPrototypeOf = Object.getPrototypeOf) && getPrototypeOf,
+        getPrototypeOf = getNative(Object, 'getPrototypeOf'),
+        parseFloat = context.parseFloat,
         push = arrayProto.push,
-        preventExtensions = isNative(Object.preventExtensions = Object.preventExtensions) && preventExtensions,
-        propertyIsEnumerable = objectProto.propertyIsEnumerable,
-        Set = isNative(Set = context.Set) && Set,
+        Set = getNative(context, 'Set'),
         setTimeout = context.setTimeout,
         splice = arrayProto.splice,
-        Uint8Array = isNative(Uint8Array = context.Uint8Array) && Uint8Array,
-        WeakMap = isNative(WeakMap = context.WeakMap) && WeakMap;
+        Uint8Array = getNative(context, 'Uint8Array'),
+        WeakMap = getNative(context, 'WeakMap');
 
     /** Used to clone array buffers. */
     var Float64Array = (function() {
@@ -942,37 +942,21 @@ process.umask = function() { return 0; };
       // where the array buffer's `byteLength` is not a multiple of the typed
       // array's `BYTES_PER_ELEMENT`.
       try {
-        var func = isNative(func = context.Float64Array) && func,
+        var func = getNative(context, 'Float64Array'),
             result = new func(new ArrayBuffer(10), 0, 1) && func;
       } catch(e) {}
-      return result;
-    }());
-
-    /** Used as `baseAssign`. */
-    var nativeAssign = (function() {
-      // Avoid `Object.assign` in Firefox 34-37 which have an early implementation
-      // with a now defunct try/catch behavior. See https://bugzilla.mozilla.org/show_bug.cgi?id=1103344
-      // for more details.
-      //
-      // Use `Object.preventExtensions` on a plain object instead of simply using
-      // `Object('x')` because Chrome and IE fail to throw an error when attempting
-      // to assign values to readonly indexes of strings in strict mode.
-      var object = { '1': 0 },
-          func = preventExtensions && isNative(func = Object.assign) && func;
-
-      try { func(preventExtensions(object), 'xo'); } catch(e) {}
-      return !object[1] && func;
+      return result || null;
     }());
 
     /* Native method references for those with the same name as other `lodash` methods. */
-    var nativeIsArray = isNative(nativeIsArray = Array.isArray) && nativeIsArray,
-        nativeCreate = isNative(nativeCreate = Object.create) && nativeCreate,
+    var nativeCreate = getNative(Object, 'create'),
+        nativeIsArray = getNative(Array, 'isArray'),
         nativeIsFinite = context.isFinite,
-        nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys,
+        nativeKeys = getNative(Object, 'keys'),
         nativeMax = Math.max,
         nativeMin = Math.min,
-        nativeNow = isNative(nativeNow = Date.now) && nativeNow,
-        nativeNumIsFinite = isNative(nativeNumIsFinite = Number.isFinite) && nativeNumIsFinite,
+        nativeNow = getNative(Date, 'now'),
+        nativeNumIsFinite = getNative(Number, 'isFinite'),
         nativeParseInt = context.parseInt,
         nativeRandom = Math.random;
 
@@ -981,8 +965,8 @@ process.umask = function() { return 0; };
         POSITIVE_INFINITY = Number.POSITIVE_INFINITY;
 
     /** Used as references for the maximum length and index of an array. */
-    var MAX_ARRAY_LENGTH = Math.pow(2, 32) - 1,
-        MAX_ARRAY_INDEX =  MAX_ARRAY_LENGTH - 1,
+    var MAX_ARRAY_LENGTH = 4294967295,
+        MAX_ARRAY_INDEX = MAX_ARRAY_LENGTH - 1,
         HALF_MAX_ARRAY_LENGTH = MAX_ARRAY_LENGTH >>> 1;
 
     /** Used as the size, in bytes, of each `Float64Array` element. */
@@ -992,7 +976,7 @@ process.umask = function() { return 0; };
      * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
      * of an array-like value.
      */
-    var MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;
+    var MAX_SAFE_INTEGER = 9007199254740991;
 
     /** Used to store function metadata. */
     var metaMap = WeakMap && new WeakMap;
@@ -1041,30 +1025,31 @@ process.umask = function() { return 0; };
      * `filter`, `flatten`, `flattenDeep`, `flow`, `flowRight`, `forEach`,
      * `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `functions`,
      * `groupBy`, `indexBy`, `initial`, `intersection`, `invert`, `invoke`, `keys`,
-     * `keysIn`, `map`, `mapValues`, `matches`, `matchesProperty`, `memoize`,
-     * `merge`, `mixin`, `negate`, `omit`, `once`, `pairs`, `partial`, `partialRight`,
-     * `partition`, `pick`, `plant`, `pluck`, `property`, `propertyOf`, `pull`,
-     * `pullAt`, `push`, `range`, `rearg`, `reject`, `remove`, `rest`, `reverse`,
-     * `shuffle`, `slice`, `sort`, `sortBy`, `sortByAll`, `sortByOrder`, `splice`,
-     * `spread`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, `tap`,
-     * `throttle`, `thru`, `times`, `toArray`, `toPlainObject`, `transform`,
-     * `union`, `uniq`, `unshift`, `unzip`, `values`, `valuesIn`, `where`,
-     * `without`, `wrap`, `xor`, `zip`, and `zipObject`
+     * `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`, `matchesProperty`,
+     * `memoize`, `merge`, `method`, `methodOf`, `mixin`, `negate`, `omit`, `once`,
+     * `pairs`, `partial`, `partialRight`, `partition`, `pick`, `plant`, `pluck`,
+     * `property`, `propertyOf`, `pull`, `pullAt`, `push`, `range`, `rearg`,
+     * `reject`, `remove`, `rest`, `restParam`, `reverse`, `set`, `shuffle`,
+     * `slice`, `sort`, `sortBy`, `sortByAll`, `sortByOrder`, `splice`, `spread`,
+     * `take`, `takeRight`, `takeRightWhile`, `takeWhile`, `tap`, `throttle`,
+     * `thru`, `times`, `toArray`, `toPlainObject`, `transform`, `union`, `uniq`,
+     * `unshift`, `unzip`, `unzipWith`, `values`, `valuesIn`, `where`, `without`,
+     * `wrap`, `xor`, `zip`, `zipObject`, `zipWith`
      *
      * The wrapper methods that are **not** chainable by default are:
      * `add`, `attempt`, `camelCase`, `capitalize`, `clone`, `cloneDeep`, `deburr`,
      * `endsWith`, `escape`, `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`,
-     * `findLast`, `findLastIndex`, `findLastKey`, `findWhere`, `first`, `has`,
-     * `identity`, `includes`, `indexOf`, `inRange`, `isArguments`, `isArray`,
-     * `isBoolean`, `isDate`, `isElement`, `isEmpty`, `isEqual`, `isError`, `isFinite`
-     * `isFunction`, `isMatch`, `isNative`, `isNaN`, `isNull`, `isNumber`, `isObject`,
-     * `isPlainObject`, `isRegExp`, `isString`, `isUndefined`, `isTypedArray`,
-     * `join`, `kebabCase`, `last`, `lastIndexOf`, `max`, `min`, `noConflict`,
-     * `noop`, `now`, `pad`, `padLeft`, `padRight`, `parseInt`, `pop`, `random`,
-     * `reduce`, `reduceRight`, `repeat`, `result`, `runInContext`, `shift`, `size`,
-     * `snakeCase`, `some`, `sortedIndex`, `sortedLastIndex`, `startCase`, `startsWith`,
-     * `sum`, `template`, `trim`, `trimLeft`, `trimRight`, `trunc`, `unescape`,
-     * `uniqueId`, `value`, and `words`
+     * `findLast`, `findLastIndex`, `findLastKey`, `findWhere`, `first`, `get`,
+     * `gt`, `gte`, `has`, `identity`, `includes`, `indexOf`, `inRange`, `isArguments`,
+     * `isArray`, `isBoolean`, `isDate`, `isElement`, `isEmpty`, `isEqual`, `isError`,
+     * `isFinite` `isFunction`, `isMatch`, `isNative`, `isNaN`, `isNull`, `isNumber`,
+     * `isObject`, `isPlainObject`, `isRegExp`, `isString`, `isUndefined`,
+     * `isTypedArray`, `join`, `kebabCase`, `last`, `lastIndexOf`, `lt`, `lte`,
+     * `max`, `min`, `noConflict`, `noop`, `now`, `pad`, `padLeft`, `padRight`,
+     * `parseInt`, `pop`, `random`, `reduce`, `reduceRight`, `repeat`, `result`,
+     * `runInContext`, `shift`, `size`, `snakeCase`, `some`, `sortedIndex`,
+     * `sortedLastIndex`, `startCase`, `startsWith`, `sum`, `template`, `trim`,
+     * `trimLeft`, `trimRight`, `trunc`, `unescape`, `uniqueId`, `value`, and `words`
      *
      * The wrapper method `sample` will return a wrapped value when `n` is provided,
      * otherwise an unwrapped value is returned.
@@ -1148,24 +1133,6 @@ process.umask = function() { return 0; };
       for (var key in new Ctor) { props.push(key); }
 
       /**
-       * Detect if functions can be decompiled by `Function#toString`
-       * (all but Firefox OS certified apps, older Opera mobile browsers, and
-       * the PlayStation 3; forced `false` for Windows 8 apps).
-       *
-       * @memberOf _.support
-       * @type boolean
-       */
-      support.funcDecomp = /\bthis\b/.test(function() { return this; });
-
-      /**
-       * Detect if `Function#name` is supported (all but IE).
-       *
-       * @memberOf _.support
-       * @type boolean
-       */
-      support.funcNames = typeof Function.name == 'string';
-
-      /**
        * Detect if the DOM is supported.
        *
        * @memberOf _.support
@@ -1175,24 +1142,6 @@ process.umask = function() { return 0; };
         support.dom = document.createDocumentFragment().nodeType === 11;
       } catch(e) {
         support.dom = false;
-      }
-
-      /**
-       * Detect if `arguments` object indexes are non-enumerable.
-       *
-       * In Firefox < 4, IE < 9, PhantomJS, and Safari < 5.1 `arguments` object
-       * indexes are non-enumerable. Chrome < 25 and Node.js < 0.11.0 treat
-       * `arguments` object indexes as non-enumerable and fail `hasOwnProperty`
-       * checks for indexes that exceed the number of function parameters and
-       * whose associated argument values are `0`.
-       *
-       * @memberOf _.support
-       * @type boolean
-       */
-      try {
-        support.nonEnumArgs = !propertyIsEnumerable.call(arguments, 1);
-      } catch(e) {
-        support.nonEnumArgs = true;
       }
     }(1, 0));
 
@@ -1593,6 +1542,35 @@ process.umask = function() { return 0; };
     }
 
     /**
+     * A specialized version of `baseExtremum` for arrays which invokes `iteratee`
+     * with one argument: (value).
+     *
+     * @private
+     * @param {Array} array The array to iterate over.
+     * @param {Function} iteratee The function invoked per iteration.
+     * @param {Function} comparator The function used to compare values.
+     * @param {*} exValue The initial extremum value.
+     * @returns {*} Returns the extremum value.
+     */
+    function arrayExtremum(array, iteratee, comparator, exValue) {
+      var index = -1,
+          length = array.length,
+          computed = exValue,
+          result = computed;
+
+      while (++index < length) {
+        var value = array[index],
+            current = +iteratee(value);
+
+        if (comparator(current, computed)) {
+          computed = current;
+          result = value;
+        }
+      }
+      return result;
+    }
+
+    /**
      * A specialized version of `_.filter` for arrays without support for callback
      * shorthands and `this` binding.
      *
@@ -1632,48 +1610,6 @@ process.umask = function() { return 0; };
 
       while (++index < length) {
         result[index] = iteratee(array[index], index, array);
-      }
-      return result;
-    }
-
-    /**
-     * A specialized version of `_.max` for arrays without support for iteratees.
-     *
-     * @private
-     * @param {Array} array The array to iterate over.
-     * @returns {*} Returns the maximum value.
-     */
-    function arrayMax(array) {
-      var index = -1,
-          length = array.length,
-          result = NEGATIVE_INFINITY;
-
-      while (++index < length) {
-        var value = array[index];
-        if (value > result) {
-          result = value;
-        }
-      }
-      return result;
-    }
-
-    /**
-     * A specialized version of `_.min` for arrays without support for iteratees.
-     *
-     * @private
-     * @param {Array} array The array to iterate over.
-     * @returns {*} Returns the minimum value.
-     */
-    function arrayMin(array) {
-      var index = -1,
-          length = array.length,
-          result = POSITIVE_INFINITY;
-
-      while (++index < length) {
-        var value = array[index];
-        if (value < result) {
-          result = value;
-        }
       }
       return result;
     }
@@ -1808,10 +1744,8 @@ process.umask = function() { return 0; };
      * @returns {Object} Returns `object`.
      */
     function assignWith(object, source, customizer) {
-      var props = keys(source);
-      push.apply(props, getSymbols(source));
-
       var index = -1,
+          props = keys(source),
           length = props.length;
 
       while (++index < length) {
@@ -1836,11 +1770,11 @@ process.umask = function() { return 0; };
      * @param {Object} source The source object.
      * @returns {Object} Returns `object`.
      */
-    var baseAssign = nativeAssign || function(object, source) {
+    function baseAssign(object, source) {
       return source == null
         ? object
-        : baseCopy(source, getSymbols(source), baseCopy(source, keys(source), object));
-    };
+        : baseCopy(source, keys(source), object);
+    }
 
     /**
      * The base implementation of `_.at` without support for string collections
@@ -1853,8 +1787,9 @@ process.umask = function() { return 0; };
      */
     function baseAt(collection, props) {
       var index = -1,
-          length = collection.length,
-          isArr = isLength(length),
+          isNil = collection == null,
+          isArr = !isNil && isArrayLike(collection),
+          length = isArr ? collection.length : 0,
           propsLength = props.length,
           result = Array(propsLength);
 
@@ -1863,7 +1798,7 @@ process.umask = function() { return 0; };
         if (isArr) {
           result[index] = isIndex(key, length) ? collection[key] : undefined;
         } else {
-          result[index] = collection[key];
+          result[index] = isNil ? undefined : collection[key];
         }
       }
       return result;
@@ -1995,14 +1930,14 @@ process.umask = function() { return 0; };
      * @returns {Object} Returns the new object.
      */
     var baseCreate = (function() {
-      function Object() {}
+      function object() {}
       return function(prototype) {
         if (isObject(prototype)) {
-          Object.prototype = prototype;
-          var result = new Object;
-          Object.prototype = null;
+          object.prototype = prototype;
+          var result = new object;
+          object.prototype = null;
         }
-        return result || context.Object();
+        return result || {};
       };
     }());
 
@@ -2112,6 +2047,32 @@ process.umask = function() { return 0; };
     }
 
     /**
+     * Gets the extremum value of `collection` invoking `iteratee` for each value
+     * in `collection` to generate the criterion by which the value is ranked.
+     * The `iteratee` is invoked with three arguments: (value, index|key, collection).
+     *
+     * @private
+     * @param {Array|Object|string} collection The collection to iterate over.
+     * @param {Function} iteratee The function invoked per iteration.
+     * @param {Function} comparator The function used to compare values.
+     * @param {*} exValue The initial extremum value.
+     * @returns {*} Returns the extremum value.
+     */
+    function baseExtremum(collection, iteratee, comparator, exValue) {
+      var computed = exValue,
+          result = computed;
+
+      baseEach(collection, function(value, index, collection) {
+        var current = +iteratee(value, index, collection);
+        if (comparator(current, computed) || (current === exValue && current === result)) {
+          computed = current;
+          result = value;
+        }
+      });
+      return result;
+    }
+
+    /**
      * The base implementation of `_.fill` without an iteratee call guard.
      *
      * @private
@@ -2190,8 +2151,8 @@ process.umask = function() { return 0; };
      *
      * @private
      * @param {Array} array The array to flatten.
-     * @param {boolean} isDeep Specify a deep flatten.
-     * @param {boolean} isStrict Restrict flattening to arrays and `arguments` objects.
+     * @param {boolean} [isDeep] Specify a deep flatten.
+     * @param {boolean} [isStrict] Restrict flattening to arrays-like objects.
      * @returns {Array} Returns the new flattened array.
      */
     function baseFlatten(array, isDeep, isStrict) {
@@ -2202,8 +2163,8 @@ process.umask = function() { return 0; };
 
       while (++index < length) {
         var value = array[index];
-
-        if (isObjectLike(value) && isLength(value.length) && (isArray(value) || isArguments(value))) {
+        if (isObjectLike(value) && isArrayLike(value) &&
+            (isStrict || isArray(value) || isArguments(value))) {
           if (isDeep) {
             // Recursively flatten arrays (susceptible to call stack limits).
             value = baseFlatten(value, isDeep, isStrict);
@@ -2211,7 +2172,6 @@ process.umask = function() { return 0; };
           var valIndex = -1,
               valLength = value.length;
 
-          result.length += valLength;
           while (++valIndex < valLength) {
             result[++resIndex] = value[valIndex];
           }
@@ -2328,13 +2288,13 @@ process.umask = function() { return 0; };
       if (pathKey !== undefined && pathKey in toObject(object)) {
         path = [pathKey];
       }
-      var index = -1,
+      var index = 0,
           length = path.length;
 
-      while (object != null && ++index < length) {
-        var result = object = object[path[index]];
+      while (object != null && index < length) {
+        object = object[path[index++]];
       }
-      return result;
+      return (index && index == length) ? object : undefined;
     }
 
     /**
@@ -2351,18 +2311,10 @@ process.umask = function() { return 0; };
      * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
      */
     function baseIsEqual(value, other, customizer, isLoose, stackA, stackB) {
-      // Exit early for identical values.
       if (value === other) {
-        // Treat `+0` vs. `-0` as not equal.
-        return value !== 0 || (1 / value == 1 / other);
+        return true;
       }
-      var valType = typeof value,
-          othType = typeof other;
-
-      // Exit early for unlike primitive values.
-      if ((valType != 'function' && valType != 'object' && othType != 'function' && othType != 'object') ||
-          value == null || other == null) {
-        // Return `false` unless both values are `NaN`.
+      if (value == null || other == null || (!isObject(value) && !isObjectLike(other))) {
         return value !== value && other !== other;
       }
       return baseIsEqualDeep(value, other, baseIsEqual, customizer, isLoose, stackA, stackB);
@@ -2413,11 +2365,11 @@ process.umask = function() { return 0; };
         return equalByTag(object, other, objTag);
       }
       if (!isLoose) {
-        var valWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
-            othWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
+        var objIsWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
+            othIsWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
 
-        if (valWrapped || othWrapped) {
-          return equalFunc(valWrapped ? object.value() : object, othWrapped ? other.value() : other, customizer, isLoose, stackA, stackB);
+        if (objIsWrapped || othIsWrapped) {
+          return equalFunc(objIsWrapped ? object.value() : object, othIsWrapped ? other.value() : other, customizer, isLoose, stackA, stackB);
         }
       }
       if (!isSameTag) {
@@ -2452,41 +2404,43 @@ process.umask = function() { return 0; };
      *
      * @private
      * @param {Object} object The object to inspect.
-     * @param {Array} props The source property names to match.
-     * @param {Array} values The source values to match.
-     * @param {Array} strictCompareFlags Strict comparison flags for source values.
+     * @param {Array} matchData The propery names, values, and compare flags to match.
      * @param {Function} [customizer] The function to customize comparing objects.
      * @returns {boolean} Returns `true` if `object` is a match, else `false`.
      */
-    function baseIsMatch(object, props, values, strictCompareFlags, customizer) {
-      var index = -1,
-          length = props.length,
+    function baseIsMatch(object, matchData, customizer) {
+      var index = matchData.length,
+          length = index,
           noCustomizer = !customizer;
 
-      while (++index < length) {
-        if ((noCustomizer && strictCompareFlags[index])
-              ? values[index] !== object[props[index]]
-              : !(props[index] in object)
+      if (object == null) {
+        return !length;
+      }
+      object = toObject(object);
+      while (index--) {
+        var data = matchData[index];
+        if ((noCustomizer && data[2])
+              ? data[1] !== object[data[0]]
+              : !(data[0] in object)
             ) {
           return false;
         }
       }
-      index = -1;
       while (++index < length) {
-        var key = props[index],
+        data = matchData[index];
+        var key = data[0],
             objValue = object[key],
-            srcValue = values[index];
+            srcValue = data[1];
 
-        if (noCustomizer && strictCompareFlags[index]) {
-          var result = objValue !== undefined || (key in object);
-        } else {
-          result = customizer ? customizer(objValue, srcValue, key) : undefined;
-          if (result === undefined) {
-            result = baseIsEqual(srcValue, objValue, customizer, true);
+        if (noCustomizer && data[2]) {
+          if (objValue === undefined && !(key in object)) {
+            return false;
           }
-        }
-        if (!result) {
-          return false;
+        } else {
+          var result = customizer ? customizer(objValue, srcValue, key) : undefined;
+          if (!(result === undefined ? baseIsEqual(srcValue, objValue, customizer, true) : result)) {
+            return false;
+          }
         }
       }
       return true;
@@ -2503,8 +2457,7 @@ process.umask = function() { return 0; };
      */
     function baseMap(collection, iteratee) {
       var index = -1,
-          length = getLength(collection),
-          result = isLength(length) ? Array(length) : [];
+          result = isArrayLike(collection) ? Array(collection.length) : [];
 
       baseEach(collection, function(value, key, collection) {
         result[++index] = iteratee(value, key, collection);
@@ -2520,50 +2473,34 @@ process.umask = function() { return 0; };
      * @returns {Function} Returns the new function.
      */
     function baseMatches(source) {
-      var props = keys(source),
-          length = props.length;
+      var matchData = getMatchData(source);
+      if (matchData.length == 1 && matchData[0][2]) {
+        var key = matchData[0][0],
+            value = matchData[0][1];
 
-      if (!length) {
-        return constant(true);
-      }
-      if (length == 1) {
-        var key = props[0],
-            value = source[key];
-
-        if (isStrictComparable(value)) {
-          return function(object) {
-            if (object == null) {
-              return false;
-            }
-            return object[key] === value && (value !== undefined || (key in toObject(object)));
-          };
-        }
-      }
-      var values = Array(length),
-          strictCompareFlags = Array(length);
-
-      while (length--) {
-        value = source[props[length]];
-        values[length] = value;
-        strictCompareFlags[length] = isStrictComparable(value);
+        return function(object) {
+          if (object == null) {
+            return false;
+          }
+          return object[key] === value && (value !== undefined || (key in toObject(object)));
+        };
       }
       return function(object) {
-        return object != null && baseIsMatch(toObject(object), props, values, strictCompareFlags);
+        return baseIsMatch(object, matchData);
       };
     }
 
     /**
-     * The base implementation of `_.matchesProperty` which does not which does
-     * not clone `value`.
+     * The base implementation of `_.matchesProperty` which does not clone `srcValue`.
      *
      * @private
      * @param {string} path The path of the property to get.
-     * @param {*} value The value to compare.
+     * @param {*} srcValue The value to compare.
      * @returns {Function} Returns the new function.
      */
-    function baseMatchesProperty(path, value) {
+    function baseMatchesProperty(path, srcValue) {
       var isArr = isArray(path),
-          isCommon = isKey(path) && isStrictComparable(value),
+          isCommon = isKey(path) && isStrictComparable(srcValue),
           pathKey = (path + '');
 
       path = toPath(path);
@@ -2581,9 +2518,9 @@ process.umask = function() { return 0; };
           key = last(path);
           object = toObject(object);
         }
-        return object[key] === value
-          ? (value !== undefined || (key in object))
-          : baseIsEqual(value, object[key], null, true);
+        return object[key] === srcValue
+          ? (srcValue !== undefined || (key in object))
+          : baseIsEqual(srcValue, object[key], undefined, true);
       };
     }
 
@@ -2603,11 +2540,9 @@ process.umask = function() { return 0; };
       if (!isObject(object)) {
         return object;
       }
-      var isSrcArr = isLength(source.length) && (isArray(source) || isTypedArray(source));
-      if (!isSrcArr) {
-        var props = keys(source);
-        push.apply(props, getSymbols(source));
-      }
+      var isSrcArr = isArrayLike(source) && (isArray(source) || isTypedArray(source)),
+          props = isSrcArr ? null : keys(source);
+
       arrayEach(props || source, function(srcValue, key) {
         if (props) {
           key = srcValue;
@@ -2626,7 +2561,7 @@ process.umask = function() { return 0; };
           if (isCommon) {
             result = srcValue;
           }
-          if ((isSrcArr || result !== undefined) &&
+          if ((result !== undefined || (isSrcArr && !(key in object))) &&
               (isCommon || (result === result ? (result !== value) : (value === value)))) {
             object[key] = result;
           }
@@ -2666,10 +2601,10 @@ process.umask = function() { return 0; };
 
       if (isCommon) {
         result = srcValue;
-        if (isLength(srcValue.length) && (isArray(srcValue) || isTypedArray(srcValue))) {
+        if (isArrayLike(srcValue) && (isArray(srcValue) || isTypedArray(srcValue))) {
           result = isArray(value)
             ? value
-            : (getLength(value) ? arrayCopy(value) : []);
+            : (isArrayLike(value) ? arrayCopy(value) : []);
         }
         else if (isPlainObject(srcValue) || isArguments(srcValue)) {
           result = isArguments(value)
@@ -2731,9 +2666,9 @@ process.umask = function() { return 0; };
      * @returns {Array} Returns `array`.
      */
     function basePullAt(array, indexes) {
-      var length = indexes.length;
+      var length = array ? indexes.length : 0;
       while (length--) {
-        var index = parseFloat(indexes[length]);
+        var index = indexes[length];
         if (index != previous && isIndex(index)) {
           var previous = index;
           splice.call(array, index, 1);
@@ -3046,7 +2981,7 @@ process.umask = function() { return 0; };
           var mid = (low + high) >>> 1,
               computed = array[mid];
 
-          if (retHighest ? (computed <= value) : (computed < value)) {
+          if ((retHighest ? (computed <= value) : (computed < value)) && computed !== null) {
             low = mid + 1;
           } else {
             high = mid;
@@ -3076,17 +3011,23 @@ process.umask = function() { return 0; };
       var low = 0,
           high = array ? array.length : 0,
           valIsNaN = value !== value,
+          valIsNull = value === null,
           valIsUndef = value === undefined;
 
       while (low < high) {
         var mid = floor((low + high) / 2),
             computed = iteratee(array[mid]),
+            isDef = computed !== undefined,
             isReflexive = computed === computed;
 
         if (valIsNaN) {
           var setLow = isReflexive || retHighest;
+        } else if (valIsNull) {
+          setLow = isReflexive && isDef && (retHighest || computed != null);
         } else if (valIsUndef) {
-          setLow = isReflexive && (retHighest || computed !== undefined);
+          setLow = isReflexive && (retHighest || isDef);
+        } else if (computed == null) {
+          setLow = false;
         } else {
           setLow = retHighest ? (computed <= value) : (computed < value);
         }
@@ -3217,12 +3158,12 @@ process.umask = function() { return 0; };
       while (++argsIndex < argsLength) {
         result[argsIndex] = args[argsIndex];
       }
-      var pad = argsIndex;
+      var offset = argsIndex;
       while (++rightIndex < rightLength) {
-        result[pad + rightIndex] = partials[rightIndex];
+        result[offset + rightIndex] = partials[rightIndex];
       }
       while (++holdersIndex < holdersLength) {
-        result[pad + holders[holdersIndex]] = args[argsIndex++];
+        result[offset + holders[holdersIndex]] = args[argsIndex++];
       }
       return result;
     }
@@ -3276,19 +3217,19 @@ process.umask = function() { return 0; };
       return restParam(function(object, sources) {
         var index = -1,
             length = object == null ? 0 : sources.length,
-            customizer = length > 2 && sources[length - 2],
-            guard = length > 2 && sources[2],
-            thisArg = length > 1 && sources[length - 1];
+            customizer = length > 2 ? sources[length - 2] : undefined,
+            guard = length > 2 ? sources[2] : undefined,
+            thisArg = length > 1 ? sources[length - 1] : undefined;
 
         if (typeof customizer == 'function') {
           customizer = bindCallback(customizer, thisArg, 5);
           length -= 2;
         } else {
-          customizer = typeof thisArg == 'function' ? thisArg : null;
+          customizer = typeof thisArg == 'function' ? thisArg : undefined;
           length -= (customizer ? 1 : 0);
         }
         if (guard && isIterateeCall(sources[0], sources[1], guard)) {
-          customizer = length < 3 ? null : customizer;
+          customizer = length < 3 ? undefined : customizer;
           length = 1;
         }
         while (++index < length) {
@@ -3413,8 +3354,20 @@ process.umask = function() { return 0; };
      */
     function createCtorWrapper(Ctor) {
       return function() {
+        // Use a `switch` statement to work with class constructors.
+        // See https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-function-objects-call-thisargument-argumentslist
+        // for more details.
+        var args = arguments;
+        switch (args.length) {
+          case 0: return new Ctor;
+          case 1: return new Ctor(args[0]);
+          case 2: return new Ctor(args[0], args[1]);
+          case 3: return new Ctor(args[0], args[1], args[2]);
+          case 4: return new Ctor(args[0], args[1], args[2], args[3]);
+          case 5: return new Ctor(args[0], args[1], args[2], args[3], args[4]);
+        }
         var thisBinding = baseCreate(Ctor.prototype),
-            result = Ctor.apply(thisBinding, arguments);
+            result = Ctor.apply(thisBinding, args);
 
         // Mimic the constructor's `return` behavior.
         // See https://es5.github.io/#x13.2.2 for more details.
@@ -3445,32 +3398,24 @@ process.umask = function() { return 0; };
      * Creates a `_.max` or `_.min` function.
      *
      * @private
-     * @param {Function} arrayFunc The function to get the extremum value from an array.
-     * @param {boolean} [isMin] Specify returning the minimum, instead of the maximum,
-     *  extremum value.
+     * @param {Function} comparator The function used to compare values.
+     * @param {*} exValue The initial extremum value.
      * @returns {Function} Returns the new extremum function.
      */
-    function createExtremum(arrayFunc, isMin) {
+    function createExtremum(comparator, exValue) {
       return function(collection, iteratee, thisArg) {
         if (thisArg && isIterateeCall(collection, iteratee, thisArg)) {
           iteratee = null;
         }
-        var func = getCallback(),
-            noIteratee = iteratee == null;
-
-        if (!(func === baseCallback && noIteratee)) {
-          noIteratee = false;
-          iteratee = func(iteratee, thisArg, 3);
-        }
-        if (noIteratee) {
-          var isArr = isArray(collection);
-          if (!isArr && isString(collection)) {
-            iteratee = charAtCallback;
-          } else {
-            return arrayFunc(isArr ? collection : toIterable(collection));
+        iteratee = getCallback(iteratee, thisArg, 3);
+        if (iteratee.length == 1) {
+          collection = toIterable(collection);
+          var result = arrayExtremum(collection, iteratee, comparator, exValue);
+          if (!(collection.length && result === exValue)) {
+            return result;
           }
         }
-        return extremumBy(collection, iteratee, isMin);
+        return baseExtremum(collection, iteratee, comparator, exValue);
       };
     }
 
@@ -3490,7 +3435,7 @@ process.umask = function() { return 0; };
           return index > -1 ? collection[index] : undefined;
         }
         return baseFind(collection, predicate, eachFunc);
-      }
+      };
     }
 
     /**
@@ -3533,11 +3478,8 @@ process.umask = function() { return 0; };
      */
     function createFlow(fromRight) {
       return function() {
-        var length = arguments.length;
-        if (!length) {
-          return function() { return arguments[0]; };
-        }
         var wrapper,
+            length = arguments.length,
             index = fromRight ? length : -1,
             leftIndex = 0,
             funcs = Array(length);
@@ -3547,16 +3489,18 @@ process.umask = function() { return 0; };
           if (typeof func != 'function') {
             throw new TypeError(FUNC_ERROR_TEXT);
           }
-          var funcName = wrapper ? '' : getFuncName(func);
-          wrapper = funcName == 'wrapper' ? new LodashWrapper([]) : wrapper;
+          if (!wrapper && LodashWrapper.prototype.thru && getFuncName(func) == 'wrapper') {
+            wrapper = new LodashWrapper([]);
+          }
         }
         index = wrapper ? -1 : length;
         while (++index < length) {
           func = funcs[index];
-          funcName = getFuncName(func);
 
-          var data = funcName == 'wrapper' ? getData(func) : null;
-          if (data && isLaziable(data[0])) {
+          var funcName = getFuncName(func),
+              data = funcName == 'wrapper' ? getData(func) : null;
+
+          if (data && isLaziable(data[0]) && data[1] == (ARY_FLAG | CURRY_FLAG | PARTIAL_FLAG | REARG_FLAG) && !data[4].length && data[9] == 1) {
             wrapper = wrapper[getFuncName(data[0])].apply(wrapper, data[3]);
           } else {
             wrapper = (func.length == 1 && isLaziable(func)) ? wrapper[funcName]() : wrapper.thru(func);
@@ -3568,7 +3512,7 @@ process.umask = function() { return 0; };
             return wrapper.plant(args[0]).value();
           }
           var index = 0,
-              result = funcs[index].apply(this, args);
+              result = length ? funcs[index].apply(this, args) : args[0];
 
           while (++index < length) {
             result = funcs[index].call(this, result);
@@ -3627,6 +3571,28 @@ process.umask = function() { return 0; };
     }
 
     /**
+     * Creates a function for `_.mapKeys` or `_.mapValues`.
+     *
+     * @private
+     * @param {boolean} [isMapKeys] Specify mapping keys instead of values.
+     * @returns {Function} Returns the new map function.
+     */
+    function createObjectMapper(isMapKeys) {
+      return function(object, iteratee, thisArg) {
+        var result = {};
+        iteratee = getCallback(iteratee, thisArg, 3);
+
+        baseForOwn(object, function(value, key, object) {
+          var mapped = iteratee(value, key, object);
+          key = isMapKeys ? mapped : key;
+          value = isMapKeys ? value : mapped;
+          result[key] = value;
+        });
+        return result;
+      };
+    }
+
+    /**
      * Creates a function for `_.padLeft` or `_.padRight`.
      *
      * @private
@@ -3636,7 +3602,7 @@ process.umask = function() { return 0; };
     function createPadDir(fromRight) {
       return function(string, length, chars) {
         string = baseToString(string);
-        return string && ((fromRight ? string : '') + createPadding(string, length, chars) + (fromRight ? '' : string));
+        return (fromRight ? string : '') + createPadding(string, length, chars) + (fromRight ? '' : string);
       };
     }
 
@@ -3695,10 +3661,8 @@ process.umask = function() { return 0; };
           isBindKey = bitmask & BIND_KEY_FLAG,
           isCurry = bitmask & CURRY_FLAG,
           isCurryBound = bitmask & CURRY_BOUND_FLAG,
-          isCurryRight = bitmask & CURRY_RIGHT_FLAG;
-
-      var Ctor = !isBindKey && createCtorWrapper(func),
-          key = func;
+          isCurryRight = bitmask & CURRY_RIGHT_FLAG,
+          Ctor = isBindKey ? null : createCtorWrapper(func);
 
       function wrapper() {
         // Avoid `arguments` object use disqualifying optimizations by
@@ -3745,17 +3709,18 @@ process.umask = function() { return 0; };
             return result;
           }
         }
-        var thisBinding = isBind ? thisArg : this;
-        if (isBindKey) {
-          func = thisBinding[key];
-        }
+        var thisBinding = isBind ? thisArg : this,
+            fn = isBindKey ? thisBinding[func] : func;
+
         if (argPos) {
           args = reorder(args, argPos);
         }
         if (isAry && ary < args.length) {
           args.length = ary;
         }
-        var fn = (this && this !== root && this instanceof wrapper) ? (Ctor || createCtorWrapper(func)) : func;
+        if (this && this !== root && this instanceof wrapper) {
+          fn = Ctor || createCtorWrapper(func);
+        }
         return fn.apply(thisBinding, args);
       }
       return wrapper;
@@ -3829,10 +3794,10 @@ process.umask = function() { return 0; };
      */
     function createSortedIndex(retHighest) {
       return function(array, value, iteratee, thisArg) {
-        var func = getCallback(iteratee);
-        return (func === baseCallback && iteratee == null)
+        var callback = getCallback(iteratee);
+        return (iteratee == null && callback === baseCallback)
           ? binaryIndex(array, value, retHighest)
-          : binaryIndexBy(array, value, func(iteratee, thisArg, 1), retHighest);
+          : binaryIndexBy(array, value, callback(iteratee, thisArg, 1), retHighest);
       };
     }
 
@@ -3918,40 +3883,35 @@ process.umask = function() { return 0; };
     function equalArrays(array, other, equalFunc, customizer, isLoose, stackA, stackB) {
       var index = -1,
           arrLength = array.length,
-          othLength = other.length,
-          result = true;
+          othLength = other.length;
 
       if (arrLength != othLength && !(isLoose && othLength > arrLength)) {
         return false;
       }
-      // Deep compare the contents, ignoring non-numeric properties.
-      while (result && ++index < arrLength) {
+      // Ignore non-index properties.
+      while (++index < arrLength) {
         var arrValue = array[index],
-            othValue = other[index];
+            othValue = other[index],
+            result = customizer ? customizer(isLoose ? othValue : arrValue, isLoose ? arrValue : othValue, index) : undefined;
 
-        result = undefined;
-        if (customizer) {
-          result = isLoose
-            ? customizer(othValue, arrValue, index)
-            : customizer(arrValue, othValue, index);
-        }
-        if (result === undefined) {
-          // Recursively compare arrays (susceptible to call stack limits).
-          if (isLoose) {
-            var othIndex = othLength;
-            while (othIndex--) {
-              othValue = other[othIndex];
-              result = (arrValue && arrValue === othValue) || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB);
-              if (result) {
-                break;
-              }
-            }
-          } else {
-            result = (arrValue && arrValue === othValue) || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB);
+        if (result !== undefined) {
+          if (result) {
+            continue;
           }
+          return false;
+        }
+        // Recursively compare arrays (susceptible to call stack limits).
+        if (isLoose) {
+          if (!arraySome(other, function(othValue) {
+                return arrValue === othValue || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB);
+              })) {
+            return false;
+          }
+        } else if (!(arrValue === othValue || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB))) {
+          return false;
         }
       }
-      return !!result;
+      return true;
     }
 
     /**
@@ -3982,8 +3942,7 @@ process.umask = function() { return 0; };
           // Treat `NaN` vs. `NaN` as equal.
           return (object != +object)
             ? other != +other
-            // But, treat `-0` vs. `+0` as not equal.
-            : (object == 0 ? ((1 / object) == (1 / other)) : object == +other);
+            : object == +other;
 
         case regexpTag:
         case stringTag:
@@ -4017,29 +3976,22 @@ process.umask = function() { return 0; };
       if (objLength != othLength && !isLoose) {
         return false;
       }
-      var skipCtor = isLoose,
-          index = -1;
-
-      while (++index < objLength) {
-        var key = objProps[index],
-            result = isLoose ? key in other : hasOwnProperty.call(other, key);
-
-        if (result) {
-          var objValue = object[key],
-              othValue = other[key];
-
-          result = undefined;
-          if (customizer) {
-            result = isLoose
-              ? customizer(othValue, objValue, key)
-              : customizer(objValue, othValue, key);
-          }
-          if (result === undefined) {
-            // Recursively compare objects (susceptible to call stack limits).
-            result = (objValue && objValue === othValue) || equalFunc(objValue, othValue, customizer, isLoose, stackA, stackB);
-          }
+      var index = objLength;
+      while (index--) {
+        var key = objProps[index];
+        if (!(isLoose ? key in other : hasOwnProperty.call(other, key))) {
+          return false;
         }
-        if (!result) {
+      }
+      var skipCtor = isLoose;
+      while (++index < objLength) {
+        key = objProps[index];
+        var objValue = object[key],
+            othValue = other[key],
+            result = customizer ? customizer(isLoose ? othValue : objValue, isLoose? objValue : othValue, key) : undefined;
+
+        // Recursively compare objects (susceptible to call stack limits).
+        if (!(result === undefined ? equalFunc(objValue, othValue, customizer, isLoose, stackA, stackB) : result)) {
           return false;
         }
         skipCtor || (skipCtor = key == 'constructor');
@@ -4057,34 +4009,6 @@ process.umask = function() { return 0; };
         }
       }
       return true;
-    }
-
-    /**
-     * Gets the extremum value of `collection` invoking `iteratee` for each value
-     * in `collection` to generate the criterion by which the value is ranked.
-     * The `iteratee` is invoked with three arguments: (value, index, collection).
-     *
-     * @private
-     * @param {Array|Object|string} collection The collection to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @param {boolean} [isMin] Specify returning the minimum, instead of the
-     *  maximum, extremum value.
-     * @returns {*} Returns the extremum value.
-     */
-    function extremumBy(collection, iteratee, isMin) {
-      var exValue = isMin ? POSITIVE_INFINITY : NEGATIVE_INFINITY,
-          computed = exValue,
-          result = computed;
-
-      baseEach(collection, function(value, index, collection) {
-        var current = iteratee(value, index, collection);
-        if ((isMin ? (current < computed) : (current > computed)) ||
-            (current === exValue && current === result)) {
-          computed = current;
-          result = value;
-        }
-      });
-      return result;
     }
 
     /**
@@ -4120,29 +4044,20 @@ process.umask = function() { return 0; };
      * @param {Function} func The function to query.
      * @returns {string} Returns the function name.
      */
-    var getFuncName = (function() {
-      if (!support.funcNames) {
-        return constant('');
-      }
-      if (constant.name == 'constant') {
-        return baseProperty('name');
-      }
-      return function(func) {
-        var result = func.name,
-            array = realNames[result],
-            length = array ? array.length : 0;
+    function getFuncName(func) {
+      var result = func.name,
+          array = realNames[result],
+          length = array ? array.length : 0;
 
-        while (length--) {
-          var data = array[length],
-              otherFunc = data.func;
-
-          if (otherFunc == null || otherFunc == func) {
-            return data.name;
-          }
+      while (length--) {
+        var data = array[length],
+            otherFunc = data.func;
+        if (otherFunc == null || otherFunc == func) {
+          return data.name;
         }
-        return result;
-      };
-    }());
+      }
+      return result;
+    }
 
     /**
      * Gets the appropriate "indexOf" function. If the `_.indexOf` method is
@@ -4163,7 +4078,7 @@ process.umask = function() { return 0; };
      * Gets the "length" property value of `object`.
      *
      * **Note:** This function is used to avoid a [JIT bug](https://bugs.webkit.org/show_bug.cgi?id=142792)
-     * in Safari on iOS 8.1 ARM64.
+     * that affects Safari on at least iOS 8.1-8.3 ARM64.
      *
      * @private
      * @param {Object} object The object to query.
@@ -4172,15 +4087,34 @@ process.umask = function() { return 0; };
     var getLength = baseProperty('length');
 
     /**
-     * Creates an array of the own symbols of `object`.
+     * Gets the propery names, values, and compare flags of `object`.
      *
      * @private
      * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of symbols.
+     * @returns {Array} Returns the match data of `object`.
      */
-    var getSymbols = !getOwnPropertySymbols ? constant([]) : function(object) {
-      return getOwnPropertySymbols(toObject(object));
-    };
+    function getMatchData(object) {
+      var result = pairs(object),
+          length = result.length;
+
+      while (length--) {
+        result[length][2] = isStrictComparable(result[length][1]);
+      }
+      return result;
+    }
+
+    /**
+     * Gets the native function at `key` of `object`.
+     *
+     * @private
+     * @param {Object} object The object to query.
+     * @param {string} key The key of the method to get.
+     * @returns {*} Returns the function if it's native, else `undefined`.
+     */
+    function getNative(object, key) {
+      var value = object == null ? undefined : object[key];
+      return isNative(value) ? value : undefined;
+    }
 
     /**
      * Gets the view, applying any `transforms` to the `start` and `end` positions.
@@ -4303,6 +4237,17 @@ process.umask = function() { return 0; };
     }
 
     /**
+     * Checks if `value` is array-like.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+     */
+    function isArrayLike(value) {
+      return value != null && isLength(getLength(value));
+    }
+
+    /**
      * Checks if `value` is a valid array-like index.
      *
      * @private
@@ -4311,7 +4256,7 @@ process.umask = function() { return 0; };
      * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
      */
     function isIndex(value, length) {
-      value = +value;
+      value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
       length = length == null ? MAX_SAFE_INTEGER : length;
       return value > -1 && value % 1 == 0 && value < length;
     }
@@ -4330,13 +4275,9 @@ process.umask = function() { return 0; };
         return false;
       }
       var type = typeof index;
-      if (type == 'number') {
-        var length = getLength(object),
-            prereq = isLength(length) && isIndex(index, length);
-      } else {
-        prereq = type == 'string' && index in object;
-      }
-      if (prereq) {
+      if (type == 'number'
+          ? (isArrayLike(object) && isIndex(index, object.length))
+          : (type == 'string' && index in object)) {
         var other = object[index];
         return value === value ? (value === other) : (other !== other);
       }
@@ -4372,7 +4313,15 @@ process.umask = function() { return 0; };
      */
     function isLaziable(func) {
       var funcName = getFuncName(func);
-      return !!funcName && func === lodash[funcName] && funcName in LazyWrapper.prototype;
+      if (!(funcName in LazyWrapper.prototype)) {
+        return false;
+      }
+      var other = lodash[funcName];
+      if (func === other) {
+        return true;
+      }
+      var data = getData(other);
+      return !!data && func === data[0];
     }
 
     /**
@@ -4397,7 +4346,7 @@ process.umask = function() { return 0; };
      *  equality comparisons, else `false`.
      */
     function isStrictComparable(value) {
-      return value === value && (value === 0 ? ((1 / value) > 0) : !isObject(value));
+      return value === value && !isObject(value);
     }
 
     /**
@@ -4471,7 +4420,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * A specialized version of `_.pick` that picks `object` properties specified
+     * A specialized version of `_.pick` which picks `object` properties specified
      * by `props`.
      *
      * @private
@@ -4496,7 +4445,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * A specialized version of `_.pick` that picks `object` properties `predicate`
+     * A specialized version of `_.pick` which picks `object` properties `predicate`
      * returns truthy for.
      *
      * @private
@@ -4612,11 +4561,10 @@ process.umask = function() { return 0; };
     function shimKeys(object) {
       var props = keysIn(object),
           propsLength = props.length,
-          length = propsLength && object.length,
-          support = lodash.support;
+          length = propsLength && object.length;
 
-      var allowIndexes = length && isLength(length) &&
-        (isArray(object) || (support.nonEnumArgs && isArguments(object)));
+      var allowIndexes = !!length && isLength(length) &&
+        (isArray(object) || isArguments(object));
 
       var index = -1,
           result = [];
@@ -4631,7 +4579,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Converts `value` to an array-like object if it is not one.
+     * Converts `value` to an array-like object if it's not one.
      *
      * @private
      * @param {*} value The value to process.
@@ -4641,14 +4589,14 @@ process.umask = function() { return 0; };
       if (value == null) {
         return [];
       }
-      if (!isLength(getLength(value))) {
+      if (!isArrayLike(value)) {
         return values(value);
       }
       return isObject(value) ? value : Object(value);
     }
 
     /**
-     * Converts `value` to an object if it is not one.
+     * Converts `value` to an object if it's not one.
      *
      * @private
      * @param {*} value The value to process.
@@ -4659,7 +4607,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Converts `value` to property path array if it is not one.
+     * Converts `value` to property path array if it's not one.
      *
      * @private
      * @param {*} value The value to process.
@@ -4758,12 +4706,9 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Creates an array excluding all values of the provided arrays using
-     * `SameValueZero` for equality comparisons.
-     *
-     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * comparisons are like strict equality comparisons, e.g. `===`, except that
-     * `NaN` matches `NaN`.
+     * Creates an array of unique `array` values not included in the other
+     * provided arrays using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * for equality comparisons.
      *
      * @static
      * @memberOf _
@@ -4777,7 +4722,7 @@ process.umask = function() { return 0; };
      * // => [1, 3]
      */
     var difference = restParam(function(array, values) {
-      return (isArray(array) || isArguments(array))
+      return isArrayLike(array)
         ? baseDifference(array, baseFlatten(values, false, true))
         : [];
     });
@@ -5172,13 +5117,10 @@ process.umask = function() { return 0; };
 
     /**
      * Gets the index at which the first occurrence of `value` is found in `array`
-     * using `SameValueZero` for equality comparisons. If `fromIndex` is negative,
-     * it is used as the offset from the end of `array`. If `array` is sorted
-     * providing `true` for `fromIndex` performs a faster binary search.
-     *
-     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * comparisons are like strict equality comparisons, e.g. `===`, except that
-     * `NaN` matches `NaN`.
+     * using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * for equality comparisons. If `fromIndex` is negative, it is used as the offset
+     * from the end of `array`. If `array` is sorted providing `true` for `fromIndex`
+     * performs a faster binary search.
      *
      * @static
      * @memberOf _
@@ -5238,12 +5180,9 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Creates an array of unique values in all provided arrays using `SameValueZero`
+     * Creates an array of unique values that are included in all of the provided
+     * arrays using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
      * for equality comparisons.
-     *
-     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * comparisons are like strict equality comparisons, e.g. `===`, except that
-     * `NaN` matches `NaN`.
      *
      * @static
      * @memberOf _
@@ -5254,27 +5193,19 @@ process.umask = function() { return 0; };
      * _.intersection([1, 2], [4, 2], [2, 1]);
      * // => [2]
      */
-    function intersection() {
-      var args = [],
-          argsIndex = -1,
-          argsLength = arguments.length,
-          caches = [],
+    var intersection = restParam(function(arrays) {
+      var othLength = arrays.length,
+          othIndex = othLength,
+          caches = Array(length),
           indexOf = getIndexOf(),
           isCommon = indexOf == baseIndexOf,
           result = [];
 
-      while (++argsIndex < argsLength) {
-        var value = arguments[argsIndex];
-        if (isArray(value) || isArguments(value)) {
-          args.push(value);
-          caches.push((isCommon && value.length >= 120) ? createCache(argsIndex && value) : null);
-        }
+      while (othIndex--) {
+        var value = arrays[othIndex] = isArrayLike(value = arrays[othIndex]) ? value : [];
+        caches[othIndex] = (isCommon && value.length >= 120) ? createCache(othIndex && value) : null;
       }
-      argsLength = args.length;
-      if (argsLength < 2) {
-        return result;
-      }
-      var array = args[0],
+      var array = arrays[0],
           index = -1,
           length = array ? array.length : 0,
           seen = caches[0];
@@ -5283,10 +5214,10 @@ process.umask = function() { return 0; };
       while (++index < length) {
         value = array[index];
         if ((seen ? cacheIndexOf(seen, value) : indexOf(result, value, 0)) < 0) {
-          argsIndex = argsLength;
-          while (--argsIndex) {
-            var cache = caches[argsIndex];
-            if ((cache ? cacheIndexOf(cache, value) : indexOf(args[argsIndex], value, 0)) < 0) {
+          var othIndex = othLength;
+          while (--othIndex) {
+            var cache = caches[othIndex];
+            if ((cache ? cacheIndexOf(cache, value) : indexOf(arrays[othIndex], value, 0)) < 0) {
               continue outer;
             }
           }
@@ -5297,7 +5228,7 @@ process.umask = function() { return 0; };
         }
       }
       return result;
-    }
+    });
 
     /**
      * Gets the last element of `array`.
@@ -5370,14 +5301,11 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Removes all provided values from `array` using `SameValueZero` for equality
-     * comparisons.
+     * Removes all provided values from `array` using
+     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * for equality comparisons.
      *
-     * **Notes:**
-     *  - Unlike `_.without`, this method mutates `array`
-     *  - [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     *    comparisons are like strict equality comparisons, e.g. `===`, except
-     *    that `NaN` matches `NaN`
+     * **Note:** Unlike `_.without`, this method mutates `array`.
      *
      * @static
      * @memberOf _
@@ -5441,7 +5369,6 @@ process.umask = function() { return 0; };
      * // => [10, 20]
      */
     var pullAt = restParam(function(array, indexes) {
-      array || (array = []);
       indexes = baseFlatten(indexes);
 
       var result = baseAt(array, indexes);
@@ -5807,12 +5734,9 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Creates an array of unique values, in order, of the provided arrays using
-     * `SameValueZero` for equality comparisons.
-     *
-     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * comparisons are like strict equality comparisons, e.g. `===`, except that
-     * `NaN` matches `NaN`.
+     * Creates an array of unique values, in order, from all of the provided arrays
+     * using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * for equality comparisons.
      *
      * @static
      * @memberOf _
@@ -5829,8 +5753,9 @@ process.umask = function() { return 0; };
     });
 
     /**
-     * Creates a duplicate-free version of an array, using `SameValueZero` for
-     * equality comparisons, in which only the first occurence of each element
+     * Creates a duplicate-free version of an array, using
+     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * for equality comparisons, in which only the first occurence of each element
      * is kept. Providing `true` for `isSorted` performs a faster search algorithm
      * for sorted arrays. If an iteratee function is provided it is invoked for
      * each element in the array to generate the criterion by which uniqueness
@@ -5847,10 +5772,6 @@ process.umask = function() { return 0; };
      * If an object is provided for `iteratee` the created `_.matches` style
      * callback returns `true` for elements that have the properties of the given
      * object, else `false`.
-     *
-     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * comparisons are like strict equality comparisons, e.g. `===`, except that
-     * `NaN` matches `NaN`.
      *
      * @static
      * @memberOf _
@@ -5890,9 +5811,9 @@ process.umask = function() { return 0; };
         iteratee = isIterateeCall(array, isSorted, thisArg) ? null : isSorted;
         isSorted = false;
       }
-      var func = getCallback();
-      if (!(func === baseCallback && iteratee == null)) {
-        iteratee = func(iteratee, thisArg, 3);
+      var callback = getCallback();
+      if (!(iteratee == null && callback === baseCallback)) {
+        iteratee = callback(iteratee, thisArg, 3);
       }
       return (isSorted && getIndexOf() == baseIndexOf)
         ? sortedUniq(array, iteratee)
@@ -5901,7 +5822,7 @@ process.umask = function() { return 0; };
 
     /**
      * This method is like `_.zip` except that it accepts an array of grouped
-     * elements and creates an array regrouping the elements to their pre-`_.zip`
+     * elements and creates an array regrouping the elements to their pre-zip
      * configuration.
      *
      * @static
@@ -5918,10 +5839,19 @@ process.umask = function() { return 0; };
      * // => [['fred', 'barney'], [30, 40], [true, false]]
      */
     function unzip(array) {
+      if (!(array && array.length)) {
+        return [];
+      }
       var index = -1,
-          length = (array && array.length && arrayMax(arrayMap(array, getLength))) >>> 0,
-          result = Array(length);
+          length = 0;
 
+      array = arrayFilter(array, function(group) {
+        if (isArrayLike(group)) {
+          length = nativeMax(group.length, length);
+          return true;
+        }
+      });
+      var result = Array(length);
       while (++index < length) {
         result[index] = arrayMap(array, baseProperty(index));
       }
@@ -5929,12 +5859,44 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Creates an array excluding all provided values using `SameValueZero` for
-     * equality comparisons.
+     * This method is like `_.unzip` except that it accepts an iteratee to specify
+     * how regrouped values should be combined. The `iteratee` is bound to `thisArg`
+     * and invoked with four arguments: (accumulator, value, index, group).
      *
-     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * comparisons are like strict equality comparisons, e.g. `===`, except that
-     * `NaN` matches `NaN`.
+     * @static
+     * @memberOf _
+     * @category Array
+     * @param {Array} array The array of grouped elements to process.
+     * @param {Function} [iteratee] The function to combine regrouped values.
+     * @param {*} [thisArg] The `this` binding of `iteratee`.
+     * @returns {Array} Returns the new array of regrouped elements.
+     * @example
+     *
+     * var zipped = _.zip([1, 2], [10, 20], [100, 200]);
+     * // => [[1, 10, 100], [2, 20, 200]]
+     *
+     * _.unzipWith(zipped, _.add);
+     * // => [3, 30, 300]
+     */
+    function unzipWith(array, iteratee, thisArg) {
+      var length = array ? array.length : 0;
+      if (!length) {
+        return [];
+      }
+      var result = unzip(array);
+      if (iteratee == null) {
+        return result;
+      }
+      iteratee = bindCallback(iteratee, thisArg, 4);
+      return arrayMap(result, function(group) {
+        return arrayReduce(group, iteratee, undefined, true);
+      });
+    }
+
+    /**
+     * Creates an array excluding all provided values using
+     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * for equality comparisons.
      *
      * @static
      * @memberOf _
@@ -5948,13 +5910,13 @@ process.umask = function() { return 0; };
      * // => [3]
      */
     var without = restParam(function(array, values) {
-      return (isArray(array) || isArguments(array))
+      return isArrayLike(array)
         ? baseDifference(array, values)
         : [];
     });
 
     /**
-     * Creates an array that is the [symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference)
+     * Creates an array of unique values that is the [symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference)
      * of the provided arrays.
      *
      * @static
@@ -5973,7 +5935,7 @@ process.umask = function() { return 0; };
 
       while (++index < length) {
         var array = arguments[index];
-        if (isArray(array) || isArguments(array)) {
+        if (isArrayLike(array)) {
           var result = result
             ? baseDifference(result, array).concat(baseDifference(array, result))
             : array;
@@ -6038,6 +6000,38 @@ process.umask = function() { return 0; };
       }
       return result;
     }
+
+    /**
+     * This method is like `_.zip` except that it accepts an iteratee to specify
+     * how grouped values should be combined. The `iteratee` is bound to `thisArg`
+     * and invoked with four arguments: (accumulator, value, index, group).
+     *
+     * @static
+     * @memberOf _
+     * @category Array
+     * @param {...Array} [arrays] The arrays to process.
+     * @param {Function} [iteratee] The function to combine grouped values.
+     * @param {*} [thisArg] The `this` binding of `iteratee`.
+     * @returns {Array} Returns the new array of grouped elements.
+     * @example
+     *
+     * _.zipWith([1, 2], [10, 20], [100, 200], _.add);
+     * // => [111, 222]
+     */
+    var zipWith = restParam(function(arrays) {
+      var length = arrays.length,
+          iteratee = length > 2 ? arrays[length - 2] : undefined,
+          thisArg = length > 1 ? arrays[length - 1] : undefined;
+
+      if (length > 2 && typeof iteratee == 'function') {
+        length -= 2;
+      } else {
+        iteratee = (length > 1 && typeof thisArg == 'function') ? (--length, thisArg) : undefined;
+        thisArg = undefined;
+      }
+      arrays.length = length;
+      return unzipWith(arrays, iteratee, thisArg);
+    });
 
     /*------------------------------------------------------------------------*/
 
@@ -6314,10 +6308,6 @@ process.umask = function() { return 0; };
      * // => ['barney', 'pebbles']
      */
     var at = restParam(function(collection, props) {
-      var length = collection ? getLength(collection) : 0;
-      if (isLength(length)) {
-        collection = toIterable(collection);
-      }
       return baseAt(collection, baseFlatten(props));
     });
 
@@ -6690,13 +6680,10 @@ process.umask = function() { return 0; };
     });
 
     /**
-     * Checks if `value` is in `collection` using `SameValueZero` for equality
-     * comparisons. If `fromIndex` is negative, it is used as the offset from
-     * the end of `collection`.
-     *
-     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * comparisons are like strict equality comparisons, e.g. `===`, except that
-     * `NaN` matches `NaN`.
+     * Checks if `value` is in `collection` using
+     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * for equality comparisons. If `fromIndex` is negative, it is used as the offset
+     * from the end of `collection`.
      *
      * @static
      * @memberOf _
@@ -6791,7 +6778,7 @@ process.umask = function() { return 0; };
     });
 
     /**
-     * Invokes the method at `path` on each element in `collection`, returning
+     * Invokes the method at `path` of each element in `collection`, returning
      * an array of the results of each invoked method. Any additional arguments
      * are provided to each invoked method. If `methodName` is a function it is
      * invoked for, and `this` bound to, each element in `collection`.
@@ -6816,11 +6803,10 @@ process.umask = function() { return 0; };
       var index = -1,
           isFunc = typeof path == 'function',
           isProp = isKey(path),
-          length = getLength(collection),
-          result = isLength(length) ? Array(length) : [];
+          result = isArrayLike(collection) ? Array(collection.length) : [];
 
       baseEach(collection, function(value) {
-        var func = isFunc ? path : (isProp && value != null && value[path]);
+        var func = isFunc ? path : ((isProp && value != null) ? value[path] : null);
         result[++index] = func ? func.apply(value, args) : invokePath(value, path, args);
       });
       return result;
@@ -6842,14 +6828,15 @@ process.umask = function() { return 0; };
      * callback returns `true` for elements that have the properties of the given
      * object, else `false`.
      *
-     * Many lodash methods are guarded to work as interatees for methods like
+     * Many lodash methods are guarded to work as iteratees for methods like
      * `_.every`, `_.filter`, `_.map`, `_.mapValues`, `_.reject`, and `_.some`.
      *
      * The guarded methods are:
-     * `ary`, `callback`, `chunk`, `clone`, `create`, `curry`, `curryRight`, `drop`,
-     * `dropRight`, `every`, `fill`, `flatten`, `invert`, `max`, `min`, `parseInt`,
-     * `slice`, `sortBy`, `take`, `takeRight`, `template`, `trim`, `trimLeft`,
-     * `trimRight`, `trunc`, `random`, `range`, `sample`, `some`, `uniq`, and `words`
+     * `ary`, `callback`, `chunk`, `clone`, `create`, `curry`, `curryRight`,
+     * `drop`, `dropRight`, `every`, `fill`, `flatten`, `invert`, `max`, `min`,
+     * `parseInt`, `slice`, `sortBy`, `take`, `takeRight`, `template`, `trim`,
+     * `trimLeft`, `trimRight`, `trunc`, `random`, `range`, `sample`, `some`,
+     * `sum`, `uniq`, and `words`
      *
      * @static
      * @memberOf _
@@ -6985,7 +6972,7 @@ process.umask = function() { return 0; };
      * value. The `iteratee` is bound to `thisArg` and invoked with four arguments:
      * (accumulator, value, index|key, collection).
      *
-     * Many lodash methods are guarded to work as interatees for methods like
+     * Many lodash methods are guarded to work as iteratees for methods like
      * `_.reduce`, `_.reduceRight`, and `_.transform`.
      *
      * The guarded methods are:
@@ -7037,22 +7024,11 @@ process.umask = function() { return 0; };
      * }, []);
      * // => [4, 5, 2, 3, 0, 1]
      */
-    var reduceRight =  createReduce(arrayReduceRight, baseEachRight);
+    var reduceRight = createReduce(arrayReduceRight, baseEachRight);
 
     /**
      * The opposite of `_.filter`; this method returns the elements of `collection`
      * that `predicate` does **not** return truthy for.
-     *
-     * If a property name is provided for `predicate` the created `_.property`
-     * style callback returns the property value of the given element.
-     *
-     * If a value is also provided for `thisArg` the created `_.matchesProperty`
-     * style callback returns `true` for elements that have a matching property
-     * value, else `false`.
-     *
-     * If an object is provided for `predicate` the created `_.matches` style
-     * callback returns `true` for elements that have the properties of the given
-     * object, else `false`.
      *
      * @static
      * @memberOf _
@@ -7118,8 +7094,20 @@ process.umask = function() { return 0; };
         var length = collection.length;
         return length > 0 ? collection[baseRandom(0, length - 1)] : undefined;
       }
-      var result = shuffle(collection);
-      result.length = nativeMin(n < 0 ? 0 : (+n || 0), result.length);
+      var index = -1,
+          result = toArray(collection),
+          length = result.length,
+          lastIndex = length - 1;
+
+      n = nativeMin(n < 0 ? 0 : (+n || 0), length);
+      while (++index < n) {
+        var rand = baseRandom(index, lastIndex),
+            value = result[rand];
+
+        result[rand] = result[index];
+        result[index] = value;
+      }
+      result.length = n;
       return result;
     }
 
@@ -7138,20 +7126,7 @@ process.umask = function() { return 0; };
      * // => [4, 1, 3, 2]
      */
     function shuffle(collection) {
-      collection = toIterable(collection);
-
-      var index = -1,
-          length = collection.length,
-          result = Array(length);
-
-      while (++index < length) {
-        var rand = baseRandom(0, index);
-        if (index != rand) {
-          result[index] = result[rand];
-        }
-        result[rand] = collection[index];
-      }
-      return result;
+      return sample(collection, POSITIVE_INFINITY);
     }
 
     /**
@@ -7777,12 +7752,13 @@ process.umask = function() { return 0; };
     var curryRight = createCurry(CURRY_RIGHT_FLAG);
 
     /**
-     * Creates a function that delays invoking `func` until after `wait` milliseconds
-     * have elapsed since the last time it was invoked. The created function comes
-     * with a `cancel` method to cancel delayed invocations. Provide an options
-     * object to indicate that `func` should be invoked on the leading and/or
-     * trailing edge of the `wait` timeout. Subsequent calls to the debounced
-     * function return the result of the last `func` invocation.
+     * Creates a debounced function that delays invoking `func` until after `wait`
+     * milliseconds have elapsed since the last time the debounced function was
+     * invoked. The debounced function comes with a `cancel` method to cancel
+     * delayed invocations. Provide an options object to indicate that `func`
+     * should be invoked on the leading and/or trailing edge of the `wait` timeout.
+     * Subsequent calls to the debounced function return the result of the last
+     * `func` invocation.
      *
      * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
      * on the trailing edge of the timeout only if the the debounced function is
@@ -8096,14 +8072,14 @@ process.umask = function() { return 0; };
       }
       var memoized = function() {
         var args = arguments,
-            cache = memoized.cache,
-            key = resolver ? resolver.apply(this, args) : args[0];
+            key = resolver ? resolver.apply(this, args) : args[0],
+            cache = memoized.cache;
 
         if (cache.has(key)) {
           return cache.get(key);
         }
         var result = func.apply(this, args);
-        cache.set(key, result);
+        memoized.cache = cache.set(key, result);
         return result;
       };
       memoized.cache = new memoize.Cache;
@@ -8350,12 +8326,12 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Creates a function that only invokes `func` at most once per every `wait`
-     * milliseconds. The created function comes with a `cancel` method to cancel
-     * delayed invocations. Provide an options object to indicate that `func`
-     * should be invoked on the leading and/or trailing edge of the `wait` timeout.
-     * Subsequent calls to the throttled function return the result of the last
-     * `func` call.
+     * Creates a throttled function that only invokes `func` at most once per
+     * every `wait` milliseconds. The throttled function comes with a `cancel`
+     * method to cancel delayed invocations. Provide an options object to indicate
+     * that `func` should be invoked on the leading and/or trailing edge of the
+     * `wait` timeout. Subsequent calls to the throttled function return the
+     * result of the last `func` call.
      *
      * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
      * on the trailing edge of the timeout only if the the throttled function is
@@ -8495,8 +8471,9 @@ process.umask = function() { return 0; };
         customizer = isDeep;
         isDeep = false;
       }
-      customizer = typeof customizer == 'function' && bindCallback(customizer, thisArg, 1);
-      return baseClone(value, isDeep, customizer);
+      return typeof customizer == 'function'
+        ? baseClone(value, isDeep, bindCallback(customizer, thisArg, 1))
+        : baseClone(value, isDeep);
     }
 
     /**
@@ -8545,8 +8522,57 @@ process.umask = function() { return 0; };
      * // => 20
      */
     function cloneDeep(value, customizer, thisArg) {
-      customizer = typeof customizer == 'function' && bindCallback(customizer, thisArg, 1);
-      return baseClone(value, true, customizer);
+      return typeof customizer == 'function'
+        ? baseClone(value, true, bindCallback(customizer, thisArg, 1))
+        : baseClone(value, true);
+    }
+
+    /**
+     * Checks if `value` is greater than `other`.
+     *
+     * @static
+     * @memberOf _
+     * @category Lang
+     * @param {*} value The value to compare.
+     * @param {*} other The other value to compare.
+     * @returns {boolean} Returns `true` if `value` is greater than `other`, else `false`.
+     * @example
+     *
+     * _.gt(3, 1);
+     * // => true
+     *
+     * _.gt(3, 3);
+     * // => false
+     *
+     * _.gt(1, 3);
+     * // => false
+     */
+    function gt(value, other) {
+      return value > other;
+    }
+
+    /**
+     * Checks if `value` is greater than or equal to `other`.
+     *
+     * @static
+     * @memberOf _
+     * @category Lang
+     * @param {*} value The value to compare.
+     * @param {*} other The other value to compare.
+     * @returns {boolean} Returns `true` if `value` is greater than or equal to `other`, else `false`.
+     * @example
+     *
+     * _.gte(3, 1);
+     * // => true
+     *
+     * _.gte(3, 3);
+     * // => true
+     *
+     * _.gte(1, 3);
+     * // => false
+     */
+    function gte(value, other) {
+      return value >= other;
     }
 
     /**
@@ -8566,8 +8592,7 @@ process.umask = function() { return 0; };
      * // => false
      */
     function isArguments(value) {
-      var length = isObjectLike(value) ? value.length : undefined;
-      return isLength(length) && objToString.call(value) == argsTag;
+      return isObjectLike(value) && isArrayLike(value) && objToString.call(value) == argsTag;
     }
 
     /**
@@ -8688,10 +8713,9 @@ process.umask = function() { return 0; };
       if (value == null) {
         return true;
       }
-      var length = getLength(value);
-      if (isLength(length) && (isArray(value) || isString(value) || isArguments(value) ||
+      if (isArrayLike(value) && (isArray(value) || isString(value) || isArguments(value) ||
           (isObjectLike(value) && isFunction(value.splice)))) {
-        return !length;
+        return !value.length;
       }
       return !keys(value).length;
     }
@@ -8711,6 +8735,7 @@ process.umask = function() { return 0; };
      *
      * @static
      * @memberOf _
+     * @alias eq
      * @category Lang
      * @param {*} value The value to compare.
      * @param {*} other The other value to compare.
@@ -8740,12 +8765,9 @@ process.umask = function() { return 0; };
      * // => true
      */
     function isEqual(value, other, customizer, thisArg) {
-      customizer = typeof customizer == 'function' && bindCallback(customizer, thisArg, 3);
-      if (!customizer && isStrictComparable(value) && isStrictComparable(other)) {
-        return value === other;
-      }
+      customizer = typeof customizer == 'function' ? bindCallback(customizer, thisArg, 3) : undefined;
       var result = customizer ? customizer(value, other) : undefined;
-      return result === undefined ? baseIsEqual(value, other, customizer) : !!result;
+      return  result === undefined ? baseIsEqual(value, other, customizer) : !!result;
     }
 
     /**
@@ -8847,7 +8869,7 @@ process.umask = function() { return 0; };
       // Avoid a V8 JIT bug in Chrome 19-20.
       // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
       var type = typeof value;
-      return type == 'function' || (!!value && type == 'object');
+      return !!value && (type == 'object' || type == 'function');
     }
 
     /**
@@ -8890,33 +8912,8 @@ process.umask = function() { return 0; };
      * // => true
      */
     function isMatch(object, source, customizer, thisArg) {
-      var props = keys(source),
-          length = props.length;
-
-      if (!length) {
-        return true;
-      }
-      if (object == null) {
-        return false;
-      }
-      customizer = typeof customizer == 'function' && bindCallback(customizer, thisArg, 3);
-      object = toObject(object);
-      if (!customizer && length == 1) {
-        var key = props[0],
-            value = source[key];
-
-        if (isStrictComparable(value)) {
-          return value === object[key] && (value !== undefined || (key in object));
-        }
-      }
-      var values = Array(length),
-          strictCompareFlags = Array(length);
-
-      while (length--) {
-        value = values[length] = source[props[length]];
-        strictCompareFlags[length] = isStrictComparable(value);
-      }
-      return baseIsMatch(object, props, values, strictCompareFlags, customizer);
+      customizer = typeof customizer == 'function' ? bindCallback(customizer, thisArg, 3) : undefined;
+      return baseIsMatch(object, getMatchData(source), customizer);
     }
 
     /**
@@ -9056,8 +9053,8 @@ process.umask = function() { return 0; };
       if (!(value && objToString.call(value) == objectTag)) {
         return false;
       }
-      var valueOf = value.valueOf,
-          objProto = isNative(valueOf) && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
+      var valueOf = getNative(value, 'valueOf'),
+          objProto = valueOf && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
 
       return objProto
         ? (value == objProto || getPrototypeOf(value) == objProto)
@@ -9081,7 +9078,7 @@ process.umask = function() { return 0; };
      * // => false
      */
     function isRegExp(value) {
-      return (isObjectLike(value) && objToString.call(value) == regexpTag) || false;
+      return isObjectLike(value) && objToString.call(value) == regexpTag;
     }
 
     /**
@@ -9142,6 +9139,54 @@ process.umask = function() { return 0; };
      */
     function isUndefined(value) {
       return value === undefined;
+    }
+
+    /**
+     * Checks if `value` is less than `other`.
+     *
+     * @static
+     * @memberOf _
+     * @category Lang
+     * @param {*} value The value to compare.
+     * @param {*} other The other value to compare.
+     * @returns {boolean} Returns `true` if `value` is less than `other`, else `false`.
+     * @example
+     *
+     * _.lt(1, 3);
+     * // => true
+     *
+     * _.lt(3, 3);
+     * // => false
+     *
+     * _.lt(3, 1);
+     * // => false
+     */
+    function lt(value, other) {
+      return value < other;
+    }
+
+    /**
+     * Checks if `value` is less than or equal to `other`.
+     *
+     * @static
+     * @memberOf _
+     * @category Lang
+     * @param {*} value The value to compare.
+     * @param {*} other The other value to compare.
+     * @returns {boolean} Returns `true` if `value` is less than or equal to `other`, else `false`.
+     * @example
+     *
+     * _.lte(1, 3);
+     * // => true
+     *
+     * _.lte(3, 3);
+     * // => true
+     *
+     * _.lte(3, 1);
+     * // => false
+     */
+    function lte(value, other) {
+      return value <= other;
     }
 
     /**
@@ -9208,7 +9253,6 @@ process.umask = function() { return 0; };
      *
      * **Note:** This method mutates `object` and is based on
      * [`Object.assign`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign).
-     *
      *
      * @static
      * @memberOf _
@@ -9539,7 +9583,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Gets the property value of `path` on `object`. If the resolved value is
+     * Gets the property value at `path` of `object`. If the resolved value is
      * `undefined` the `defaultValue` is used in its place.
      *
      * @static
@@ -9597,10 +9641,14 @@ process.umask = function() { return 0; };
       if (!result && !isKey(path)) {
         path = toPath(path);
         object = path.length == 1 ? object : baseGet(object, baseSlice(path, 0, -1));
+        if (object == null) {
+          return false;
+        }
         path = last(path);
-        result = object != null && hasOwnProperty.call(object, path);
+        result = hasOwnProperty.call(object, path);
       }
-      return result;
+      return result || (isLength(object.length) && isIndex(path, object.length) &&
+        (isArray(object) || isArguments(object)));
     }
 
     /**
@@ -9681,12 +9729,9 @@ process.umask = function() { return 0; };
      * // => ['0', '1']
      */
     var keys = !nativeKeys ? shimKeys : function(object) {
-      if (object) {
-        var Ctor = object.constructor,
-            length = object.length;
-      }
+      var Ctor = object == null ? null : object.constructor;
       if ((typeof Ctor == 'function' && Ctor.prototype === object) ||
-          (typeof object != 'function' && isLength(length))) {
+          (typeof object != 'function' && isArrayLike(object))) {
         return shimKeys(object);
       }
       return isObject(object) ? nativeKeys(object) : [];
@@ -9723,7 +9768,7 @@ process.umask = function() { return 0; };
       }
       var length = object.length;
       length = (length && isLength(length) &&
-        (isArray(object) || (support.nonEnumArgs && isArguments(object))) && length) || 0;
+        (isArray(object) || isArguments(object)) && length) || 0;
 
       var Ctor = object.constructor,
           index = -1,
@@ -9742,6 +9787,28 @@ process.umask = function() { return 0; };
       }
       return result;
     }
+
+    /**
+     * The opposite of `_.mapValues`; this method creates an object with the
+     * same values as `object` and keys generated by running each own enumerable
+     * property of `object` through `iteratee`.
+     *
+     * @static
+     * @memberOf _
+     * @category Object
+     * @param {Object} object The object to iterate over.
+     * @param {Function|Object|string} [iteratee=_.identity] The function invoked
+     *  per iteration.
+     * @param {*} [thisArg] The `this` binding of `iteratee`.
+     * @returns {Object} Returns the new mapped object.
+     * @example
+     *
+     * _.mapKeys({ 'a': 1, 'b': 2 }, function(value, key) {
+     *   return key + value;
+     * });
+     * // => { 'a1': 1, 'b2': 2 }
+     */
+    var mapKeys = createObjectMapper(true);
 
     /**
      * Creates an object with the same keys as `object` and values generated by
@@ -9784,15 +9851,7 @@ process.umask = function() { return 0; };
      * _.mapValues(users, 'age');
      * // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
      */
-    function mapValues(object, iteratee, thisArg) {
-      var result = {};
-      iteratee = getCallback(iteratee, thisArg, 3);
-
-      baseForOwn(object, function(value, key, object) {
-        result[key] = iteratee(value, key, object);
-      });
-      return result;
-    }
+    var mapValues = createObjectMapper();
 
     /**
      * Recursively merges own enumerable properties of the source object(s), that
@@ -9847,11 +9906,6 @@ process.umask = function() { return 0; };
     /**
      * The opposite of `_.pick`; this method creates an object composed of the
      * own and inherited enumerable properties of `object` that are not omitted.
-     * Property names may be specified as individual arguments or as arrays of
-     * property names. If `predicate` is provided it is invoked for each property
-     * of `object` omitting the properties `predicate` returns truthy for. The
-     * predicate is bound to `thisArg` and invoked with three arguments:
-     * (value, key, object).
      *
      * @static
      * @memberOf _
@@ -9901,6 +9955,8 @@ process.umask = function() { return 0; };
      * // => [['barney', 36], ['fred', 40]] (iteration order is not guaranteed)
      */
     function pairs(object) {
+      object = toObject(object);
+
       var index = -1,
           props = keys(object),
           length = props.length,
@@ -10021,13 +10077,13 @@ process.umask = function() { return 0; };
 
       var index = -1,
           length = path.length,
-          endIndex = length - 1,
+          lastIndex = length - 1,
           nested = object;
 
       while (nested != null && ++index < length) {
         var key = path[index];
         if (isObject(nested)) {
-          if (index == endIndex) {
+          if (index == lastIndex) {
             nested[key] = value;
           } else if (nested[key] == null) {
             nested[key] = isIndex(path[index + 1]) ? [] : {};
@@ -10077,7 +10133,7 @@ process.umask = function() { return 0; };
           if (isArr) {
             accumulator = isArray(object) ? new Ctor : [];
           } else {
-            accumulator = baseCreate(isFunction(Ctor) && Ctor.prototype);
+            accumulator = baseCreate(isFunction(Ctor) ? Ctor.prototype : null);
           }
         } else {
           accumulator = {};
@@ -10356,7 +10412,7 @@ process.umask = function() { return 0; };
      * use a third-party library like [_he_](https://mths.be/he).
      *
      * Though the ">" character is escaped for symmetry, characters like
-     * ">" and "/" don't require escaping in HTML and have no special meaning
+     * ">" and "/" don't need escaping in HTML and have no special meaning
      * unless they're part of a tag or unquoted attribute value.
      * See [Mathias Bynens's article](https://mathiasbynens.be/notes/ambiguous-ampersands)
      * (under "semi-related fun fact") for more details.
@@ -10433,7 +10489,7 @@ process.umask = function() { return 0; };
     });
 
     /**
-     * Pads `string` on the left and right sides if it is shorter than `length`.
+     * Pads `string` on the left and right sides if it's shorter than `length`.
      * Padding characters are truncated if they can't be evenly divided by `length`.
      *
      * @static
@@ -10471,7 +10527,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Pads `string` on the left side if it is shorter than `length`. Padding
+     * Pads `string` on the left side if it's shorter than `length`. Padding
      * characters are truncated if they exceed `length`.
      *
      * @static
@@ -10495,7 +10551,7 @@ process.umask = function() { return 0; };
     var padLeft = createPadDir();
 
     /**
-     * Pads `string` on the right side if it is shorter than `length`. Padding
+     * Pads `string` on the right side if it's shorter than `length`. Padding
      * characters are truncated if they exceed `length`.
      *
      * @static
@@ -10976,7 +11032,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Truncates `string` if it is longer than the given maximum string length.
+     * Truncates `string` if it's longer than the given maximum string length.
      * The last characters of the truncated string are replaced with the omission
      * string which defaults to "...".
      *
@@ -11190,7 +11246,9 @@ process.umask = function() { return 0; };
       if (guard && isIterateeCall(func, thisArg, guard)) {
         thisArg = null;
       }
-      return baseCallback(func, thisArg);
+      return isObjectLike(func)
+        ? matches(func)
+        : baseCallback(func, thisArg);
     }
 
     /**
@@ -11235,7 +11293,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Creates a function which performs a deep comparison between a given object
+     * Creates a function that performs a deep comparison between a given object
      * and `source`, returning `true` if the given object has equivalent property
      * values, else `false`.
      *
@@ -11264,7 +11322,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Creates a function which compares the property value of `path` on a given
+     * Creates a function that compares the property value of `path` on a given
      * object to `value`.
      *
      * **Note:** This method supports comparing arrays, booleans, `Date` objects,
@@ -11275,7 +11333,7 @@ process.umask = function() { return 0; };
      * @memberOf _
      * @category Utility
      * @param {Array|string} path The path of the property to get.
-     * @param {*} value The value to compare.
+     * @param {*} srcValue The value to match.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -11287,17 +11345,19 @@ process.umask = function() { return 0; };
      * _.find(users, _.matchesProperty('user', 'fred'));
      * // => { 'user': 'fred' }
      */
-    function matchesProperty(path, value) {
-      return baseMatchesProperty(path, baseClone(value, true));
+    function matchesProperty(path, srcValue) {
+      return baseMatchesProperty(path, baseClone(srcValue, true));
     }
 
     /**
-     * Creates a function which invokes the method at `path` on a given object.
+     * Creates a function that invokes the method at `path` on a given object.
+     * Any additional arguments are provided to the invoked method.
      *
      * @static
      * @memberOf _
      * @category Utility
      * @param {Array|string} path The path of the method to invoke.
+     * @param {...*} [args] The arguments to invoke the method with.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -11315,17 +11375,19 @@ process.umask = function() { return 0; };
     var method = restParam(function(path, args) {
       return function(object) {
         return invokePath(object, path, args);
-      }
+      };
     });
 
     /**
-     * The opposite of `_.method`; this method creates a function which invokes
-     * the method at a given path on `object`.
+     * The opposite of `_.method`; this method creates a function that invokes
+     * the method at a given path on `object`. Any additional arguments are
+     * provided to the invoked method.
      *
      * @static
      * @memberOf _
      * @category Utility
      * @param {Object} object The object to query.
+     * @param {...*} [args] The arguments to invoke the method with.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -11369,9 +11431,6 @@ process.umask = function() { return 0; };
      *   });
      * }
      *
-     * // use `_.runInContext` to avoid conflicts (esp. in Node.js)
-     * var _ = require('lodash').runInContext();
-     *
      * _.mixin({ 'vowels': vowels });
      * _.vowels('fred');
      * // => ['e']
@@ -11386,8 +11445,8 @@ process.umask = function() { return 0; };
     function mixin(object, source, options) {
       if (options == null) {
         var isObj = isObject(source),
-            props = isObj && keys(source),
-            methodNames = props && props.length && baseFunctions(source, props);
+            props = isObj ? keys(source) : null,
+            methodNames = (props && props.length) ? baseFunctions(source, props) : null;
 
         if (!(methodNames ? methodNames.length : isObj)) {
           methodNames = false;
@@ -11454,7 +11513,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * A no-operation function which returns `undefined` regardless of the
+     * A no-operation function that returns `undefined` regardless of the
      * arguments it receives.
      *
      * @static
@@ -11472,7 +11531,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * Creates a function which returns the property value at `path` on a
+     * Creates a function that returns the property value at `path` on a
      * given object.
      *
      * @static
@@ -11498,7 +11557,7 @@ process.umask = function() { return 0; };
     }
 
     /**
-     * The opposite of `_.property`; this method creates a function which returns
+     * The opposite of `_.property`; this method creates a function that returns
      * the property value at a given path on `object`.
      *
      * @static
@@ -11719,7 +11778,7 @@ process.umask = function() { return 0; };
      * _.max(users, 'age');
      * // => { 'user': 'fred', 'age': 40 }
      */
-    var max = createExtremum(arrayMax);
+    var max = createExtremum(gt, NEGATIVE_INFINITY);
 
     /**
      * Gets the minimum value of `collection`. If `collection` is empty or falsey
@@ -11768,7 +11827,7 @@ process.umask = function() { return 0; };
      * _.min(users, 'age');
      * // => { 'user': 'barney', 'age': 36 }
      */
-    var min = createExtremum(arrayMin, true);
+    var min = createExtremum(lt, POSITIVE_INFINITY);
 
     /**
      * Gets the sum of the values in `collection`.
@@ -11806,12 +11865,12 @@ process.umask = function() { return 0; };
       if (thisArg && isIterateeCall(collection, iteratee, thisArg)) {
         iteratee = null;
       }
-      var func = getCallback(),
+      var callback = getCallback(),
           noIteratee = iteratee == null;
 
-      if (!(func === baseCallback && noIteratee)) {
+      if (!(noIteratee && callback === baseCallback)) {
         noIteratee = false;
-        iteratee = func(iteratee, thisArg, 3);
+        iteratee = callback(iteratee, thisArg, 3);
       }
       return noIteratee
         ? arraySum(isArray(collection) ? collection : toIterable(collection))
@@ -11890,6 +11949,7 @@ process.umask = function() { return 0; };
     lodash.keys = keys;
     lodash.keysIn = keysIn;
     lodash.map = map;
+    lodash.mapKeys = mapKeys;
     lodash.mapValues = mapValues;
     lodash.matches = matches;
     lodash.matchesProperty = matchesProperty;
@@ -11938,6 +11998,7 @@ process.umask = function() { return 0; };
     lodash.union = union;
     lodash.uniq = uniq;
     lodash.unzip = unzip;
+    lodash.unzipWith = unzipWith;
     lodash.values = values;
     lodash.valuesIn = valuesIn;
     lodash.where = where;
@@ -11946,6 +12007,7 @@ process.umask = function() { return 0; };
     lodash.xor = xor;
     lodash.zip = zip;
     lodash.zipObject = zipObject;
+    lodash.zipWith = zipWith;
 
     // Add aliases.
     lodash.backflow = flowRight;
@@ -11987,6 +12049,8 @@ process.umask = function() { return 0; };
     lodash.findWhere = findWhere;
     lodash.first = first;
     lodash.get = get;
+    lodash.gt = gt;
+    lodash.gte = gte;
     lodash.has = has;
     lodash.identity = identity;
     lodash.includes = includes;
@@ -12016,6 +12080,8 @@ process.umask = function() { return 0; };
     lodash.kebabCase = kebabCase;
     lodash.last = last;
     lodash.lastIndexOf = lastIndexOf;
+    lodash.lt = lt;
+    lodash.lte = lte;
     lodash.max = max;
     lodash.min = min;
     lodash.noConflict = noConflict;
@@ -12052,6 +12118,7 @@ process.umask = function() { return 0; };
     lodash.all = every;
     lodash.any = some;
     lodash.contains = includes;
+    lodash.eq = isEqual;
     lodash.detect = find;
     lodash.foldl = reduce;
     lodash.foldr = reduceRight;
@@ -12195,8 +12262,13 @@ process.umask = function() { return 0; };
 
     LazyWrapper.prototype.slice = function(start, end) {
       start = start == null ? 0 : (+start || 0);
-      var result = start < 0 ? this.takeRight(-start) : this.drop(start);
 
+      var result = this;
+      if (start < 0) {
+        result = this.takeRight(-start);
+      } else if (start) {
+        result = this.drop(start);
+      }
       if (end !== undefined) {
         end = (+end || 0);
         result = end < 0 ? result.dropRight(-end) : result.take(end - start);
@@ -12219,7 +12291,6 @@ process.umask = function() { return 0; };
 
       lodash.prototype[methodName] = function() {
         var args = arguments,
-            length = args.length,
             chainAll = this.__chain__,
             value = this.__wrapped__,
             isHybrid = !!this.__actions__.length,
@@ -12333,7 +12404,7 @@ process.umask = function() { return 0; };
     if (moduleExports) {
       (freeModule.exports = _)._ = _;
     }
-    // Export for Narwhal or Rhino -require.
+    // Export for Rhino with CommonJS support.
     else {
       freeExports._ = _;
     }
@@ -12345,7 +12416,7 @@ process.umask = function() { return 0; };
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/AutoFocusMixin.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/AutoFocusMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -12372,7 +12443,7 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
-},{"./focusNode":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/focusNode.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
+},{"./focusNode":"/opt/app/node_modules/react/lib/focusNode.js"}],"/opt/app/node_modules/react/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -12594,7 +12665,7 @@ var BeforeInputEventPlugin = {
 
 module.exports = BeforeInputEventPlugin;
 
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./SyntheticInputEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticInputEvent.js","./keyOf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CSSProperty.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./EventPropagators":"/opt/app/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./SyntheticInputEvent":"/opt/app/node_modules/react/lib/SyntheticInputEvent.js","./keyOf":"/opt/app/node_modules/react/lib/keyOf.js"}],"/opt/app/node_modules/react/lib/CSSProperty.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -12713,7 +12784,7 @@ var CSSProperty = {
 
 module.exports = CSSProperty;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CSSPropertyOperations.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/CSSPropertyOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -12848,7 +12919,7 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./CSSProperty":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CSSProperty.js","./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./camelizeStyleName":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/camelizeStyleName.js","./dangerousStyleValue":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/dangerousStyleValue.js","./hyphenateStyleName":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/hyphenateStyleName.js","./memoizeStringOnly":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/memoizeStringOnly.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CallbackQueue.js":[function(require,module,exports){
+},{"./CSSProperty":"/opt/app/node_modules/react/lib/CSSProperty.js","./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./camelizeStyleName":"/opt/app/node_modules/react/lib/camelizeStyleName.js","./dangerousStyleValue":"/opt/app/node_modules/react/lib/dangerousStyleValue.js","./hyphenateStyleName":"/opt/app/node_modules/react/lib/hyphenateStyleName.js","./memoizeStringOnly":"/opt/app/node_modules/react/lib/memoizeStringOnly.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/CallbackQueue.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -12948,7 +13019,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 module.exports = CallbackQueue;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/PooledClass.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ChangeEventPlugin.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./PooledClass":"/opt/app/node_modules/react/lib/PooledClass.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ChangeEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -13330,7 +13401,7 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginHub.js","./EventPropagators":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./ReactUpdates":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js","./SyntheticEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticEvent.js","./isEventSupported":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isEventSupported.js","./isTextInputElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isTextInputElement.js","./keyOf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ClientReactRootIndex.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/opt/app/node_modules/react/lib/EventPluginHub.js","./EventPropagators":"/opt/app/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./ReactUpdates":"/opt/app/node_modules/react/lib/ReactUpdates.js","./SyntheticEvent":"/opt/app/node_modules/react/lib/SyntheticEvent.js","./isEventSupported":"/opt/app/node_modules/react/lib/isEventSupported.js","./isTextInputElement":"/opt/app/node_modules/react/lib/isTextInputElement.js","./keyOf":"/opt/app/node_modules/react/lib/keyOf.js"}],"/opt/app/node_modules/react/lib/ClientReactRootIndex.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -13355,7 +13426,7 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CompositionEventPlugin.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/CompositionEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -13614,7 +13685,7 @@ var CompositionEventPlugin = {
 
 module.exports = CompositionEventPlugin;
 
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./ReactInputSelection":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInputSelection.js","./SyntheticCompositionEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticCompositionEvent.js","./getTextContentAccessor":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getTextContentAccessor.js","./keyOf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMChildrenOperations.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./EventPropagators":"/opt/app/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./ReactInputSelection":"/opt/app/node_modules/react/lib/ReactInputSelection.js","./SyntheticCompositionEvent":"/opt/app/node_modules/react/lib/SyntheticCompositionEvent.js","./getTextContentAccessor":"/opt/app/node_modules/react/lib/getTextContentAccessor.js","./keyOf":"/opt/app/node_modules/react/lib/keyOf.js"}],"/opt/app/node_modules/react/lib/DOMChildrenOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -13789,7 +13860,7 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
-},{"./Danger":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Danger.js","./ReactMultiChildUpdateTypes":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./getTextContentAccessor":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getTextContentAccessor.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMProperty.js":[function(require,module,exports){
+},{"./Danger":"/opt/app/node_modules/react/lib/Danger.js","./ReactMultiChildUpdateTypes":"/opt/app/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./getTextContentAccessor":"/opt/app/node_modules/react/lib/getTextContentAccessor.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/DOMProperty.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -14088,7 +14159,7 @@ var DOMProperty = {
 module.exports = DOMProperty;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMPropertyOperations.js":[function(require,module,exports){
+},{"./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/DOMPropertyOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -14285,7 +14356,7 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMProperty.js","./escapeTextForBrowser":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/escapeTextForBrowser.js","./memoizeStringOnly":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/memoizeStringOnly.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Danger.js":[function(require,module,exports){
+},{"./DOMProperty":"/opt/app/node_modules/react/lib/DOMProperty.js","./escapeTextForBrowser":"/opt/app/node_modules/react/lib/escapeTextForBrowser.js","./memoizeStringOnly":"/opt/app/node_modules/react/lib/memoizeStringOnly.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/Danger.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -14471,7 +14542,7 @@ var Danger = {
 module.exports = Danger;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./createNodesFromMarkup":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/createNodesFromMarkup.js","./emptyFunction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js","./getMarkupWrap":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getMarkupWrap.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./createNodesFromMarkup":"/opt/app/node_modules/react/lib/createNodesFromMarkup.js","./emptyFunction":"/opt/app/node_modules/react/lib/emptyFunction.js","./getMarkupWrap":"/opt/app/node_modules/react/lib/getMarkupWrap.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -14511,7 +14582,7 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
-},{"./keyOf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
+},{"./keyOf":"/opt/app/node_modules/react/lib/keyOf.js"}],"/opt/app/node_modules/react/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -14651,7 +14722,7 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPropagators.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./SyntheticMouseEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticMouseEvent.js","./keyOf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./EventPropagators":"/opt/app/node_modules/react/lib/EventPropagators.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./SyntheticMouseEvent":"/opt/app/node_modules/react/lib/SyntheticMouseEvent.js","./keyOf":"/opt/app/node_modules/react/lib/keyOf.js"}],"/opt/app/node_modules/react/lib/EventConstants.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -14723,7 +14794,7 @@ var EventConstants = {
 
 module.exports = EventConstants;
 
-},{"./keyMirror":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyMirror.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventListener.js":[function(require,module,exports){
+},{"./keyMirror":"/opt/app/node_modules/react/lib/keyMirror.js"}],"/opt/app/node_modules/react/lib/EventListener.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -14813,7 +14884,7 @@ var EventListener = {
 module.exports = EventListener;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginHub.js":[function(require,module,exports){
+},{"./emptyFunction":"/opt/app/node_modules/react/lib/emptyFunction.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/EventPluginHub.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -15089,7 +15160,7 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginUtils.js","./accumulateInto":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/forEachAccumulated.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginRegistry.js":[function(require,module,exports){
+},{"./EventPluginRegistry":"/opt/app/node_modules/react/lib/EventPluginRegistry.js","./EventPluginUtils":"/opt/app/node_modules/react/lib/EventPluginUtils.js","./accumulateInto":"/opt/app/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/opt/app/node_modules/react/lib/forEachAccumulated.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/EventPluginRegistry.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -15369,7 +15440,7 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginUtils.js":[function(require,module,exports){
+},{"./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/EventPluginUtils.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -15590,7 +15661,7 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPropagators.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/EventPropagators.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -15732,7 +15803,7 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 }).call(this,require('_process'))
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginHub.js","./accumulateInto":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/forEachAccumulated.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/opt/app/node_modules/react/lib/EventPluginHub.js","./accumulateInto":"/opt/app/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/opt/app/node_modules/react/lib/forEachAccumulated.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ExecutionEnvironment.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15777,7 +15848,7 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15969,7 +16040,7 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
-},{"./DOMProperty":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMProperty.js","./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/LinkedValueUtils.js":[function(require,module,exports){
+},{"./DOMProperty":"/opt/app/node_modules/react/lib/DOMProperty.js","./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js"}],"/opt/app/node_modules/react/lib/LinkedValueUtils.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16125,7 +16196,7 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
-},{"./ReactPropTypes":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTypes.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/LocalEventTrapMixin.js":[function(require,module,exports){
+},{"./ReactPropTypes":"/opt/app/node_modules/react/lib/ReactPropTypes.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/LocalEventTrapMixin.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -16175,7 +16246,7 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserEventEmitter":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserEventEmitter.js","./accumulateInto":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/forEachAccumulated.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/MobileSafariClickEventPlugin.js":[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":"/opt/app/node_modules/react/lib/ReactBrowserEventEmitter.js","./accumulateInto":"/opt/app/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/opt/app/node_modules/react/lib/forEachAccumulated.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/MobileSafariClickEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16233,7 +16304,7 @@ var MobileSafariClickEventPlugin = {
 
 module.exports = MobileSafariClickEventPlugin;
 
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./emptyFunction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./emptyFunction":"/opt/app/node_modules/react/lib/emptyFunction.js"}],"/opt/app/node_modules/react/lib/Object.assign.js":[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -16280,7 +16351,7 @@ function assign(target, sources) {
 
 module.exports = assign;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16396,7 +16467,7 @@ var PooledClass = {
 module.exports = PooledClass;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/React.js":[function(require,module,exports){
+},{"./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/React.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16584,7 +16655,7 @@ React.version = '0.12.2';
 module.exports = React;
 
 }).call(this,require('_process'))
-},{"./DOMPropertyOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMPropertyOperations.js","./EventPluginUtils":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginUtils.js","./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactChildren":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactChildren.js","./ReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactComponent.js","./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactContext":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCurrentOwner.js","./ReactDOM":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOM.js","./ReactDOMComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMComponent.js","./ReactDefaultInjection":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDefaultInjection.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElementValidator.js","./ReactInstanceHandles":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInstanceHandles.js","./ReactLegacyElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactLegacyElement.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./ReactMultiChild":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMultiChild.js","./ReactPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js","./ReactPropTypes":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTypes.js","./ReactServerRendering":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactServerRendering.js","./ReactTextComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactTextComponent.js","./deprecated":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/deprecated.js","./onlyChild":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/onlyChild.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js":[function(require,module,exports){
+},{"./DOMPropertyOperations":"/opt/app/node_modules/react/lib/DOMPropertyOperations.js","./EventPluginUtils":"/opt/app/node_modules/react/lib/EventPluginUtils.js","./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactChildren":"/opt/app/node_modules/react/lib/ReactChildren.js","./ReactComponent":"/opt/app/node_modules/react/lib/ReactComponent.js","./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactContext":"/opt/app/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/opt/app/node_modules/react/lib/ReactCurrentOwner.js","./ReactDOM":"/opt/app/node_modules/react/lib/ReactDOM.js","./ReactDOMComponent":"/opt/app/node_modules/react/lib/ReactDOMComponent.js","./ReactDefaultInjection":"/opt/app/node_modules/react/lib/ReactDefaultInjection.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/opt/app/node_modules/react/lib/ReactElementValidator.js","./ReactInstanceHandles":"/opt/app/node_modules/react/lib/ReactInstanceHandles.js","./ReactLegacyElement":"/opt/app/node_modules/react/lib/ReactLegacyElement.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./ReactMultiChild":"/opt/app/node_modules/react/lib/ReactMultiChild.js","./ReactPerf":"/opt/app/node_modules/react/lib/ReactPerf.js","./ReactPropTypes":"/opt/app/node_modules/react/lib/ReactPropTypes.js","./ReactServerRendering":"/opt/app/node_modules/react/lib/ReactServerRendering.js","./ReactTextComponent":"/opt/app/node_modules/react/lib/ReactTextComponent.js","./deprecated":"/opt/app/node_modules/react/lib/deprecated.js","./onlyChild":"/opt/app/node_modules/react/lib/onlyChild.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16627,7 +16698,7 @@ var ReactBrowserComponentMixin = {
 module.exports = ReactBrowserComponentMixin;
 
 }).call(this,require('_process'))
-},{"./ReactEmptyComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactEmptyComponent.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
+},{"./ReactEmptyComponent":"/opt/app/node_modules/react/lib/ReactEmptyComponent.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16982,7 +17053,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 
 module.exports = ReactBrowserEventEmitter;
 
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginRegistry.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactEventEmitterMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ViewportMetrics.js","./isEventSupported":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isEventSupported.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/opt/app/node_modules/react/lib/EventPluginHub.js","./EventPluginRegistry":"/opt/app/node_modules/react/lib/EventPluginRegistry.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactEventEmitterMixin":"/opt/app/node_modules/react/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/opt/app/node_modules/react/lib/ViewportMetrics.js","./isEventSupported":"/opt/app/node_modules/react/lib/isEventSupported.js"}],"/opt/app/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -17132,7 +17203,7 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require('_process'))
-},{"./PooledClass":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/PooledClass.js","./traverseAllChildren":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/traverseAllChildren.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
+},{"./PooledClass":"/opt/app/node_modules/react/lib/PooledClass.js","./traverseAllChildren":"/opt/app/node_modules/react/lib/traverseAllChildren.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -17575,7 +17646,7 @@ var ReactComponent = {
 module.exports = ReactComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactOwner":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactOwner.js","./ReactUpdates":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./keyMirror":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyMirror.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactOwner":"/opt/app/node_modules/react/lib/ReactOwner.js","./ReactUpdates":"/opt/app/node_modules/react/lib/ReactUpdates.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./keyMirror":"/opt/app/node_modules/react/lib/keyMirror.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -17697,7 +17768,7 @@ var ReactComponentBrowserEnvironment = {
 module.exports = ReactComponentBrowserEnvironment;
 
 }).call(this,require('_process'))
-},{"./ReactDOMIDOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMIDOperations.js","./ReactMarkupChecksum":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMarkupChecksum.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js","./ReactReconcileTransaction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactReconcileTransaction.js","./getReactRootElementInContainer":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getReactRootElementInContainer.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./setInnerHTML":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/setInnerHTML.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js":[function(require,module,exports){
+},{"./ReactDOMIDOperations":"/opt/app/node_modules/react/lib/ReactDOMIDOperations.js","./ReactMarkupChecksum":"/opt/app/node_modules/react/lib/ReactMarkupChecksum.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./ReactPerf":"/opt/app/node_modules/react/lib/ReactPerf.js","./ReactReconcileTransaction":"/opt/app/node_modules/react/lib/ReactReconcileTransaction.js","./getReactRootElementInContainer":"/opt/app/node_modules/react/lib/getReactRootElementInContainer.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./setInnerHTML":"/opt/app/node_modules/react/lib/setInnerHTML.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactCompositeComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -19137,7 +19208,7 @@ var ReactCompositeComponent = {
 module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactComponent.js","./ReactContext":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElementValidator.js","./ReactEmptyComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactEmptyComponent.js","./ReactErrorUtils":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactErrorUtils.js","./ReactLegacyElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactLegacyElement.js","./ReactOwner":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactOwner.js","./ReactPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js","./ReactPropTransferer":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTransferer.js","./ReactPropTypeLocationNames":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTypeLocations.js","./ReactUpdates":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js","./instantiateReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./keyMirror":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyMirror.js","./keyOf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js","./mapObject":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/mapObject.js","./monitorCodeUse":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/monitorCodeUse.js","./shouldUpdateReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactContext.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactComponent":"/opt/app/node_modules/react/lib/ReactComponent.js","./ReactContext":"/opt/app/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/opt/app/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/opt/app/node_modules/react/lib/ReactElementValidator.js","./ReactEmptyComponent":"/opt/app/node_modules/react/lib/ReactEmptyComponent.js","./ReactErrorUtils":"/opt/app/node_modules/react/lib/ReactErrorUtils.js","./ReactLegacyElement":"/opt/app/node_modules/react/lib/ReactLegacyElement.js","./ReactOwner":"/opt/app/node_modules/react/lib/ReactOwner.js","./ReactPerf":"/opt/app/node_modules/react/lib/ReactPerf.js","./ReactPropTransferer":"/opt/app/node_modules/react/lib/ReactPropTransferer.js","./ReactPropTypeLocationNames":"/opt/app/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/opt/app/node_modules/react/lib/ReactPropTypeLocations.js","./ReactUpdates":"/opt/app/node_modules/react/lib/ReactUpdates.js","./instantiateReactComponent":"/opt/app/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./keyMirror":"/opt/app/node_modules/react/lib/keyMirror.js","./keyOf":"/opt/app/node_modules/react/lib/keyOf.js","./mapObject":"/opt/app/node_modules/react/lib/mapObject.js","./monitorCodeUse":"/opt/app/node_modules/react/lib/monitorCodeUse.js","./shouldUpdateReactComponent":"/opt/app/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactContext.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -19199,7 +19270,7 @@ var ReactContext = {
 
 module.exports = ReactContext;
 
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js"}],"/opt/app/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -19233,7 +19304,7 @@ var ReactCurrentOwner = {
 
 module.exports = ReactCurrentOwner;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOM.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/ReactDOM.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -19416,7 +19487,7 @@ var ReactDOM = mapObject({
 module.exports = ReactDOM;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElementValidator.js","./ReactLegacyElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactLegacyElement.js","./mapObject":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/mapObject.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMButton.js":[function(require,module,exports){
+},{"./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/opt/app/node_modules/react/lib/ReactElementValidator.js","./ReactLegacyElement":"/opt/app/node_modules/react/lib/ReactLegacyElement.js","./mapObject":"/opt/app/node_modules/react/lib/mapObject.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactDOMButton.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -19481,7 +19552,7 @@ var ReactDOMButton = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMButton;
 
-},{"./AutoFocusMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/AutoFocusMixin.js","./ReactBrowserComponentMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./keyMirror":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyMirror.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMComponent.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/opt/app/node_modules/react/lib/AutoFocusMixin.js","./ReactBrowserComponentMixin":"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/opt/app/node_modules/react/lib/ReactDOM.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./keyMirror":"/opt/app/node_modules/react/lib/keyMirror.js"}],"/opt/app/node_modules/react/lib/ReactDOMComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -19968,7 +20039,7 @@ assign(
 module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CSSPropertyOperations.js","./DOMProperty":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactBrowserEventEmitter":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactComponent.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./ReactMultiChild":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMultiChild.js","./ReactPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js","./escapeTextForBrowser":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/escapeTextForBrowser.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./isEventSupported":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isEventSupported.js","./keyOf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js","./monitorCodeUse":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/monitorCodeUse.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMForm.js":[function(require,module,exports){
+},{"./CSSPropertyOperations":"/opt/app/node_modules/react/lib/CSSPropertyOperations.js","./DOMProperty":"/opt/app/node_modules/react/lib/DOMProperty.js","./DOMPropertyOperations":"/opt/app/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactBrowserEventEmitter":"/opt/app/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactComponent":"/opt/app/node_modules/react/lib/ReactComponent.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./ReactMultiChild":"/opt/app/node_modules/react/lib/ReactMultiChild.js","./ReactPerf":"/opt/app/node_modules/react/lib/ReactPerf.js","./escapeTextForBrowser":"/opt/app/node_modules/react/lib/escapeTextForBrowser.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./isEventSupported":"/opt/app/node_modules/react/lib/isEventSupported.js","./keyOf":"/opt/app/node_modules/react/lib/keyOf.js","./monitorCodeUse":"/opt/app/node_modules/react/lib/monitorCodeUse.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactDOMForm.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -20018,7 +20089,7 @@ var ReactDOMForm = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMForm;
 
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMIDOperations.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/opt/app/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/opt/app/node_modules/react/lib/ReactDOM.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js"}],"/opt/app/node_modules/react/lib/ReactDOMIDOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -20204,7 +20275,7 @@ var ReactDOMIDOperations = {
 module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CSSPropertyOperations.js","./DOMChildrenOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMChildrenOperations.js","./DOMPropertyOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMPropertyOperations.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./setInnerHTML":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/setInnerHTML.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMImg.js":[function(require,module,exports){
+},{"./CSSPropertyOperations":"/opt/app/node_modules/react/lib/CSSPropertyOperations.js","./DOMChildrenOperations":"/opt/app/node_modules/react/lib/DOMChildrenOperations.js","./DOMPropertyOperations":"/opt/app/node_modules/react/lib/DOMPropertyOperations.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./ReactPerf":"/opt/app/node_modules/react/lib/ReactPerf.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./setInnerHTML":"/opt/app/node_modules/react/lib/setInnerHTML.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactDOMImg.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -20252,7 +20323,7 @@ var ReactDOMImg = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMImg;
 
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMInput.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/opt/app/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/opt/app/node_modules/react/lib/ReactDOM.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js"}],"/opt/app/node_modules/react/lib/ReactDOMInput.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -20430,7 +20501,7 @@ var ReactDOMInput = ReactCompositeComponent.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMOption.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/opt/app/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/opt/app/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/opt/app/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/opt/app/node_modules/react/lib/ReactDOM.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/opt/app/node_modules/react/lib/ReactUpdates.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactDOMOption.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -20483,7 +20554,7 @@ var ReactDOMOption = ReactCompositeComponent.createClass({
 module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserComponentMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMSelect.js":[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/opt/app/node_modules/react/lib/ReactDOM.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactDOMSelect.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -20667,7 +20738,7 @@ var ReactDOMSelect = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMSelect;
 
-},{"./AutoFocusMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/AutoFocusMixin.js","./LinkedValueUtils":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMSelection.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/opt/app/node_modules/react/lib/AutoFocusMixin.js","./LinkedValueUtils":"/opt/app/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/opt/app/node_modules/react/lib/ReactDOM.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/opt/app/node_modules/react/lib/ReactUpdates.js"}],"/opt/app/node_modules/react/lib/ReactDOMSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -20876,7 +20947,7 @@ var ReactDOMSelection = {
 
 module.exports = ReactDOMSelection;
 
-},{"./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./getNodeForCharacterOffset":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getTextContentAccessor.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMTextarea.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./getNodeForCharacterOffset":"/opt/app/node_modules/react/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/opt/app/node_modules/react/lib/getTextContentAccessor.js"}],"/opt/app/node_modules/react/lib/ReactDOMTextarea.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -21017,7 +21088,7 @@ var ReactDOMTextarea = ReactCompositeComponent.createClass({
 module.exports = ReactDOMTextarea;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/opt/app/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/opt/app/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/opt/app/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/opt/app/node_modules/react/lib/ReactDOM.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/opt/app/node_modules/react/lib/ReactUpdates.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -21090,7 +21161,7 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactUpdates":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js","./Transaction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Transaction.js","./emptyFunction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDefaultInjection.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactUpdates":"/opt/app/node_modules/react/lib/ReactUpdates.js","./Transaction":"/opt/app/node_modules/react/lib/Transaction.js","./emptyFunction":"/opt/app/node_modules/react/lib/emptyFunction.js"}],"/opt/app/node_modules/react/lib/ReactDefaultInjection.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -21219,7 +21290,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ChangeEventPlugin.js","./ClientReactRootIndex":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ClientReactRootIndex.js","./CompositionEventPlugin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CompositionEventPlugin.js","./DefaultEventPluginOrder":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EnterLeaveEventPlugin.js","./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./HTMLDOMPropertyConfig":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/HTMLDOMPropertyConfig.js","./MobileSafariClickEventPlugin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/MobileSafariClickEventPlugin.js","./ReactBrowserComponentMixin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactComponentBrowserEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactComponentBrowserEnvironment.js","./ReactDOMButton":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMButton.js","./ReactDOMComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMComponent.js","./ReactDOMForm":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMForm.js","./ReactDOMImg":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMImg.js","./ReactDOMInput":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMSelect.js","./ReactDOMTextarea":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMTextarea.js","./ReactDefaultBatchingStrategy":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDefaultBatchingStrategy.js","./ReactDefaultPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDefaultPerf.js","./ReactEventListener":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactEventListener.js","./ReactInjection":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInjection.js","./ReactInstanceHandles":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./SVGDOMPropertyConfig":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SelectEventPlugin.js","./ServerReactRootIndex":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ServerReactRootIndex.js","./SimpleEventPlugin":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SimpleEventPlugin.js","./createFullPageComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/createFullPageComponent.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDefaultPerf.js":[function(require,module,exports){
+},{"./BeforeInputEventPlugin":"/opt/app/node_modules/react/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/opt/app/node_modules/react/lib/ChangeEventPlugin.js","./ClientReactRootIndex":"/opt/app/node_modules/react/lib/ClientReactRootIndex.js","./CompositionEventPlugin":"/opt/app/node_modules/react/lib/CompositionEventPlugin.js","./DefaultEventPluginOrder":"/opt/app/node_modules/react/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/opt/app/node_modules/react/lib/EnterLeaveEventPlugin.js","./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./HTMLDOMPropertyConfig":"/opt/app/node_modules/react/lib/HTMLDOMPropertyConfig.js","./MobileSafariClickEventPlugin":"/opt/app/node_modules/react/lib/MobileSafariClickEventPlugin.js","./ReactBrowserComponentMixin":"/opt/app/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactComponentBrowserEnvironment":"/opt/app/node_modules/react/lib/ReactComponentBrowserEnvironment.js","./ReactDOMButton":"/opt/app/node_modules/react/lib/ReactDOMButton.js","./ReactDOMComponent":"/opt/app/node_modules/react/lib/ReactDOMComponent.js","./ReactDOMForm":"/opt/app/node_modules/react/lib/ReactDOMForm.js","./ReactDOMImg":"/opt/app/node_modules/react/lib/ReactDOMImg.js","./ReactDOMInput":"/opt/app/node_modules/react/lib/ReactDOMInput.js","./ReactDOMOption":"/opt/app/node_modules/react/lib/ReactDOMOption.js","./ReactDOMSelect":"/opt/app/node_modules/react/lib/ReactDOMSelect.js","./ReactDOMTextarea":"/opt/app/node_modules/react/lib/ReactDOMTextarea.js","./ReactDefaultBatchingStrategy":"/opt/app/node_modules/react/lib/ReactDefaultBatchingStrategy.js","./ReactDefaultPerf":"/opt/app/node_modules/react/lib/ReactDefaultPerf.js","./ReactEventListener":"/opt/app/node_modules/react/lib/ReactEventListener.js","./ReactInjection":"/opt/app/node_modules/react/lib/ReactInjection.js","./ReactInstanceHandles":"/opt/app/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./SVGDOMPropertyConfig":"/opt/app/node_modules/react/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/opt/app/node_modules/react/lib/SelectEventPlugin.js","./ServerReactRootIndex":"/opt/app/node_modules/react/lib/ServerReactRootIndex.js","./SimpleEventPlugin":"/opt/app/node_modules/react/lib/SimpleEventPlugin.js","./createFullPageComponent":"/opt/app/node_modules/react/lib/createFullPageComponent.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactDefaultPerf.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -21479,7 +21550,7 @@ var ReactDefaultPerf = {
 
 module.exports = ReactDefaultPerf;
 
-},{"./DOMProperty":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMProperty.js","./ReactDefaultPerfAnalysis":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDefaultPerfAnalysis.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js","./performanceNow":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/performanceNow.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDefaultPerfAnalysis.js":[function(require,module,exports){
+},{"./DOMProperty":"/opt/app/node_modules/react/lib/DOMProperty.js","./ReactDefaultPerfAnalysis":"/opt/app/node_modules/react/lib/ReactDefaultPerfAnalysis.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./ReactPerf":"/opt/app/node_modules/react/lib/ReactPerf.js","./performanceNow":"/opt/app/node_modules/react/lib/performanceNow.js"}],"/opt/app/node_modules/react/lib/ReactDefaultPerfAnalysis.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -21685,7 +21756,7 @@ var ReactDefaultPerfAnalysis = {
 
 module.exports = ReactDefaultPerfAnalysis;
 
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js"}],"/opt/app/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -21931,7 +22002,7 @@ ReactElement.isValidElement = function(object) {
 module.exports = ReactElement;
 
 }).call(this,require('_process'))
-},{"./ReactContext":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCurrentOwner.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
+},{"./ReactContext":"/opt/app/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/opt/app/node_modules/react/lib/ReactCurrentOwner.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -22213,7 +22284,7 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactPropTypeLocations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTypeLocations.js","./monitorCodeUse":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/monitorCodeUse.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactEmptyComponent.js":[function(require,module,exports){
+},{"./ReactCurrentOwner":"/opt/app/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactPropTypeLocations":"/opt/app/node_modules/react/lib/ReactPropTypeLocations.js","./monitorCodeUse":"/opt/app/node_modules/react/lib/monitorCodeUse.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactEmptyComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -22290,7 +22361,7 @@ var ReactEmptyComponent = {
 module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactErrorUtils.js":[function(require,module,exports){
+},{"./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactErrorUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -22322,7 +22393,7 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -22372,7 +22443,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 
-},{"./EventPluginHub":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginHub.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactEventListener.js":[function(require,module,exports){
+},{"./EventPluginHub":"/opt/app/node_modules/react/lib/EventPluginHub.js"}],"/opt/app/node_modules/react/lib/ReactEventListener.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -22556,7 +22627,7 @@ var ReactEventListener = {
 
 module.exports = ReactEventListener;
 
-},{"./EventListener":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventListener.js","./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/PooledClass.js","./ReactInstanceHandles":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js","./getEventTarget":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventTarget.js","./getUnboundedScrollPosition":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getUnboundedScrollPosition.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInjection.js":[function(require,module,exports){
+},{"./EventListener":"/opt/app/node_modules/react/lib/EventListener.js","./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./PooledClass":"/opt/app/node_modules/react/lib/PooledClass.js","./ReactInstanceHandles":"/opt/app/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/opt/app/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/opt/app/node_modules/react/lib/ReactUpdates.js","./getEventTarget":"/opt/app/node_modules/react/lib/getEventTarget.js","./getUnboundedScrollPosition":"/opt/app/node_modules/react/lib/getUnboundedScrollPosition.js"}],"/opt/app/node_modules/react/lib/ReactInjection.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -22596,7 +22667,7 @@ var ReactInjection = {
 
 module.exports = ReactInjection;
 
-},{"./DOMProperty":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMProperty.js","./EventPluginHub":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginHub.js","./ReactBrowserEventEmitter":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactComponent.js","./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactEmptyComponent.js","./ReactNativeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactNativeComponent.js","./ReactPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js","./ReactRootIndex":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactRootIndex.js","./ReactUpdates":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInputSelection.js":[function(require,module,exports){
+},{"./DOMProperty":"/opt/app/node_modules/react/lib/DOMProperty.js","./EventPluginHub":"/opt/app/node_modules/react/lib/EventPluginHub.js","./ReactBrowserEventEmitter":"/opt/app/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactComponent":"/opt/app/node_modules/react/lib/ReactComponent.js","./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/opt/app/node_modules/react/lib/ReactEmptyComponent.js","./ReactNativeComponent":"/opt/app/node_modules/react/lib/ReactNativeComponent.js","./ReactPerf":"/opt/app/node_modules/react/lib/ReactPerf.js","./ReactRootIndex":"/opt/app/node_modules/react/lib/ReactRootIndex.js","./ReactUpdates":"/opt/app/node_modules/react/lib/ReactUpdates.js"}],"/opt/app/node_modules/react/lib/ReactInputSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -22732,7 +22803,7 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
-},{"./ReactDOMSelection":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactDOMSelection.js","./containsNode":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/containsNode.js","./focusNode":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/focusNode.js","./getActiveElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getActiveElement.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInstanceHandles.js":[function(require,module,exports){
+},{"./ReactDOMSelection":"/opt/app/node_modules/react/lib/ReactDOMSelection.js","./containsNode":"/opt/app/node_modules/react/lib/containsNode.js","./focusNode":"/opt/app/node_modules/react/lib/focusNode.js","./getActiveElement":"/opt/app/node_modules/react/lib/getActiveElement.js"}],"/opt/app/node_modules/react/lib/ReactInstanceHandles.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -23067,7 +23138,7 @@ var ReactInstanceHandles = {
 module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
-},{"./ReactRootIndex":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactRootIndex.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactLegacyElement.js":[function(require,module,exports){
+},{"./ReactRootIndex":"/opt/app/node_modules/react/lib/ReactRootIndex.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactLegacyElement.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -23314,7 +23385,7 @@ ReactLegacyElementFactory._isLegacyCallWarningEnabled = true;
 module.exports = ReactLegacyElementFactory;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCurrentOwner.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./monitorCodeUse":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/monitorCodeUse.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMarkupChecksum.js":[function(require,module,exports){
+},{"./ReactCurrentOwner":"/opt/app/node_modules/react/lib/ReactCurrentOwner.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./monitorCodeUse":"/opt/app/node_modules/react/lib/monitorCodeUse.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactMarkupChecksum.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -23362,7 +23433,7 @@ var ReactMarkupChecksum = {
 
 module.exports = ReactMarkupChecksum;
 
-},{"./adler32":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/adler32.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMount.js":[function(require,module,exports){
+},{"./adler32":"/opt/app/node_modules/react/lib/adler32.js"}],"/opt/app/node_modules/react/lib/ReactMount.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -24060,7 +24131,7 @@ ReactMount.renderComponent = deprecated(
 module.exports = ReactMount;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactCurrentOwner":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInstanceHandles.js","./ReactLegacyElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactLegacyElement.js","./ReactPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js","./containsNode":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/containsNode.js","./deprecated":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/deprecated.js","./getReactRootElementInContainer":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getReactRootElementInContainer.js","./instantiateReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./shouldUpdateReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMultiChild.js":[function(require,module,exports){
+},{"./DOMProperty":"/opt/app/node_modules/react/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/opt/app/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactCurrentOwner":"/opt/app/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/opt/app/node_modules/react/lib/ReactInstanceHandles.js","./ReactLegacyElement":"/opt/app/node_modules/react/lib/ReactLegacyElement.js","./ReactPerf":"/opt/app/node_modules/react/lib/ReactPerf.js","./containsNode":"/opt/app/node_modules/react/lib/containsNode.js","./deprecated":"/opt/app/node_modules/react/lib/deprecated.js","./getReactRootElementInContainer":"/opt/app/node_modules/react/lib/getReactRootElementInContainer.js","./instantiateReactComponent":"/opt/app/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./shouldUpdateReactComponent":"/opt/app/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactMultiChild.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -24488,7 +24559,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 
-},{"./ReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactComponent.js","./ReactMultiChildUpdateTypes":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./flattenChildren":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/flattenChildren.js","./instantiateReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/shouldUpdateReactComponent.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMultiChildUpdateTypes.js":[function(require,module,exports){
+},{"./ReactComponent":"/opt/app/node_modules/react/lib/ReactComponent.js","./ReactMultiChildUpdateTypes":"/opt/app/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./flattenChildren":"/opt/app/node_modules/react/lib/flattenChildren.js","./instantiateReactComponent":"/opt/app/node_modules/react/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/opt/app/node_modules/react/lib/shouldUpdateReactComponent.js"}],"/opt/app/node_modules/react/lib/ReactMultiChildUpdateTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -24521,7 +24592,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 
-},{"./keyMirror":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyMirror.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactNativeComponent.js":[function(require,module,exports){
+},{"./keyMirror":"/opt/app/node_modules/react/lib/keyMirror.js"}],"/opt/app/node_modules/react/lib/ReactNativeComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -24594,7 +24665,7 @@ var ReactNativeComponent = {
 module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactOwner.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactOwner.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -24750,7 +24821,7 @@ var ReactOwner = {
 module.exports = ReactOwner;
 
 }).call(this,require('_process'))
-},{"./emptyObject":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyObject.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js":[function(require,module,exports){
+},{"./emptyObject":"/opt/app/node_modules/react/lib/emptyObject.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactPerf.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -24834,7 +24905,7 @@ function _noMeasure(objName, fnName, func) {
 module.exports = ReactPerf;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTransferer.js":[function(require,module,exports){
+},{"_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactPropTransferer.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -25001,7 +25072,7 @@ var ReactPropTransferer = {
 module.exports = ReactPropTransferer;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./emptyFunction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./joinClasses":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/joinClasses.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./emptyFunction":"/opt/app/node_modules/react/lib/emptyFunction.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./joinClasses":"/opt/app/node_modules/react/lib/joinClasses.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -25029,7 +25100,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTypeLocations.js":[function(require,module,exports){
+},{"_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactPropTypeLocations.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25053,7 +25124,7 @@ var ReactPropTypeLocations = keyMirror({
 
 module.exports = ReactPropTypeLocations;
 
-},{"./keyMirror":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyMirror.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
+},{"./keyMirror":"/opt/app/node_modules/react/lib/keyMirror.js"}],"/opt/app/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25407,7 +25478,7 @@ function getPreciseType(propValue) {
 
 module.exports = ReactPropTypes;
 
-},{"./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactPropTypeLocationNames":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPropTypeLocationNames.js","./deprecated":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/deprecated.js","./emptyFunction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPutListenerQueue.js":[function(require,module,exports){
+},{"./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactPropTypeLocationNames":"/opt/app/node_modules/react/lib/ReactPropTypeLocationNames.js","./deprecated":"/opt/app/node_modules/react/lib/deprecated.js","./emptyFunction":"/opt/app/node_modules/react/lib/emptyFunction.js"}],"/opt/app/node_modules/react/lib/ReactPutListenerQueue.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25463,7 +25534,7 @@ PooledClass.addPoolingTo(ReactPutListenerQueue);
 
 module.exports = ReactPutListenerQueue;
 
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserEventEmitter.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactReconcileTransaction.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./PooledClass":"/opt/app/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/opt/app/node_modules/react/lib/ReactBrowserEventEmitter.js"}],"/opt/app/node_modules/react/lib/ReactReconcileTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25639,7 +25710,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 
-},{"./CallbackQueue":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInputSelection.js","./ReactPutListenerQueue":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Transaction.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactRootIndex.js":[function(require,module,exports){
+},{"./CallbackQueue":"/opt/app/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./PooledClass":"/opt/app/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/opt/app/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/opt/app/node_modules/react/lib/ReactInputSelection.js","./ReactPutListenerQueue":"/opt/app/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/opt/app/node_modules/react/lib/Transaction.js"}],"/opt/app/node_modules/react/lib/ReactRootIndex.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25670,7 +25741,7 @@ var ReactRootIndex = {
 
 module.exports = ReactRootIndex;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactServerRendering.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/ReactServerRendering.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -25750,7 +25821,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInstanceHandles.js","./ReactMarkupChecksum":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactMarkupChecksum.js","./ReactServerRenderingTransaction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactServerRenderingTransaction.js","./instantiateReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
+},{"./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/opt/app/node_modules/react/lib/ReactInstanceHandles.js","./ReactMarkupChecksum":"/opt/app/node_modules/react/lib/ReactMarkupChecksum.js","./ReactServerRenderingTransaction":"/opt/app/node_modules/react/lib/ReactServerRenderingTransaction.js","./instantiateReactComponent":"/opt/app/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -25863,7 +25934,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
-},{"./CallbackQueue":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/PooledClass.js","./ReactPutListenerQueue":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Transaction.js","./emptyFunction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactTextComponent.js":[function(require,module,exports){
+},{"./CallbackQueue":"/opt/app/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./PooledClass":"/opt/app/node_modules/react/lib/PooledClass.js","./ReactPutListenerQueue":"/opt/app/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/opt/app/node_modules/react/lib/Transaction.js","./emptyFunction":"/opt/app/node_modules/react/lib/emptyFunction.js"}],"/opt/app/node_modules/react/lib/ReactTextComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25969,7 +26040,7 @@ ReactTextComponentFactory.type = ReactTextComponent;
 
 module.exports = ReactTextComponentFactory;
 
-},{"./DOMPropertyOperations":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./ReactComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactComponent.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./escapeTextForBrowser":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/escapeTextForBrowser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactUpdates.js":[function(require,module,exports){
+},{"./DOMPropertyOperations":"/opt/app/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./ReactComponent":"/opt/app/node_modules/react/lib/ReactComponent.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./escapeTextForBrowser":"/opt/app/node_modules/react/lib/escapeTextForBrowser.js"}],"/opt/app/node_modules/react/lib/ReactUpdates.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -26259,7 +26330,7 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
-},{"./CallbackQueue":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/PooledClass.js","./ReactCurrentOwner":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCurrentOwner.js","./ReactPerf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactPerf.js","./Transaction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Transaction.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
+},{"./CallbackQueue":"/opt/app/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./PooledClass":"/opt/app/node_modules/react/lib/PooledClass.js","./ReactCurrentOwner":"/opt/app/node_modules/react/lib/ReactCurrentOwner.js","./ReactPerf":"/opt/app/node_modules/react/lib/ReactPerf.js","./Transaction":"/opt/app/node_modules/react/lib/Transaction.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -26351,7 +26422,7 @@ var SVGDOMPropertyConfig = {
 
 module.exports = SVGDOMPropertyConfig;
 
-},{"./DOMProperty":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/DOMProperty.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SelectEventPlugin.js":[function(require,module,exports){
+},{"./DOMProperty":"/opt/app/node_modules/react/lib/DOMProperty.js"}],"/opt/app/node_modules/react/lib/SelectEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -26546,7 +26617,7 @@ var SelectEventPlugin = {
 
 module.exports = SelectEventPlugin;
 
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPropagators.js","./ReactInputSelection":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticEvent.js","./getActiveElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getActiveElement.js","./isTextInputElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isTextInputElement.js","./keyOf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js","./shallowEqual":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/shallowEqual.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ServerReactRootIndex.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./EventPropagators":"/opt/app/node_modules/react/lib/EventPropagators.js","./ReactInputSelection":"/opt/app/node_modules/react/lib/ReactInputSelection.js","./SyntheticEvent":"/opt/app/node_modules/react/lib/SyntheticEvent.js","./getActiveElement":"/opt/app/node_modules/react/lib/getActiveElement.js","./isTextInputElement":"/opt/app/node_modules/react/lib/isTextInputElement.js","./keyOf":"/opt/app/node_modules/react/lib/keyOf.js","./shallowEqual":"/opt/app/node_modules/react/lib/shallowEqual.js"}],"/opt/app/node_modules/react/lib/ServerReactRootIndex.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -26577,7 +26648,7 @@ var ServerReactRootIndex = {
 
 module.exports = ServerReactRootIndex;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SimpleEventPlugin.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/SimpleEventPlugin.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -27005,7 +27076,7 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
-},{"./EventConstants":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventConstants.js","./EventPluginUtils":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPluginUtils.js","./EventPropagators":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/EventPropagators.js","./SyntheticClipboardEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticTouchEvent.js","./SyntheticUIEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventCharCode.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","./keyOf":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
+},{"./EventConstants":"/opt/app/node_modules/react/lib/EventConstants.js","./EventPluginUtils":"/opt/app/node_modules/react/lib/EventPluginUtils.js","./EventPropagators":"/opt/app/node_modules/react/lib/EventPropagators.js","./SyntheticClipboardEvent":"/opt/app/node_modules/react/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/opt/app/node_modules/react/lib/SyntheticDragEvent.js","./SyntheticEvent":"/opt/app/node_modules/react/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/opt/app/node_modules/react/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/opt/app/node_modules/react/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/opt/app/node_modules/react/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/opt/app/node_modules/react/lib/SyntheticTouchEvent.js","./SyntheticUIEvent":"/opt/app/node_modules/react/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/opt/app/node_modules/react/lib/SyntheticWheelEvent.js","./getEventCharCode":"/opt/app/node_modules/react/lib/getEventCharCode.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","./keyOf":"/opt/app/node_modules/react/lib/keyOf.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27051,7 +27122,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 module.exports = SyntheticClipboardEvent;
 
 
-},{"./SyntheticEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticEvent.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/opt/app/node_modules/react/lib/SyntheticEvent.js"}],"/opt/app/node_modules/react/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27097,7 +27168,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticCompositionEvent;
 
 
-},{"./SyntheticEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticEvent.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticDragEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/opt/app/node_modules/react/lib/SyntheticEvent.js"}],"/opt/app/node_modules/react/lib/SyntheticDragEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27136,7 +27207,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
 
-},{"./SyntheticMouseEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticMouseEvent.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticEvent.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/opt/app/node_modules/react/lib/SyntheticMouseEvent.js"}],"/opt/app/node_modules/react/lib/SyntheticEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27294,7 +27365,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.threeArgumentPooler);
 
 module.exports = SyntheticEvent;
 
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/PooledClass.js","./emptyFunction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js","./getEventTarget":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventTarget.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticFocusEvent.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./PooledClass":"/opt/app/node_modules/react/lib/PooledClass.js","./emptyFunction":"/opt/app/node_modules/react/lib/emptyFunction.js","./getEventTarget":"/opt/app/node_modules/react/lib/getEventTarget.js"}],"/opt/app/node_modules/react/lib/SyntheticFocusEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27333,7 +27404,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
-},{"./SyntheticUIEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticUIEvent.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticInputEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/opt/app/node_modules/react/lib/SyntheticUIEvent.js"}],"/opt/app/node_modules/react/lib/SyntheticInputEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -27380,7 +27451,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticInputEvent;
 
 
-},{"./SyntheticEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticEvent.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/opt/app/node_modules/react/lib/SyntheticEvent.js"}],"/opt/app/node_modules/react/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27467,7 +27538,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
 
-},{"./SyntheticUIEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventCharCode.js","./getEventKey":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventKey.js","./getEventModifierState":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventModifierState.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticMouseEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/opt/app/node_modules/react/lib/SyntheticUIEvent.js","./getEventCharCode":"/opt/app/node_modules/react/lib/getEventCharCode.js","./getEventKey":"/opt/app/node_modules/react/lib/getEventKey.js","./getEventModifierState":"/opt/app/node_modules/react/lib/getEventModifierState.js"}],"/opt/app/node_modules/react/lib/SyntheticMouseEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27550,7 +27621,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
 
-},{"./SyntheticUIEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ViewportMetrics.js","./getEventModifierState":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventModifierState.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticTouchEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/opt/app/node_modules/react/lib/SyntheticUIEvent.js","./ViewportMetrics":"/opt/app/node_modules/react/lib/ViewportMetrics.js","./getEventModifierState":"/opt/app/node_modules/react/lib/getEventModifierState.js"}],"/opt/app/node_modules/react/lib/SyntheticTouchEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27598,7 +27669,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
 
-},{"./SyntheticUIEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventModifierState.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticUIEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/opt/app/node_modules/react/lib/SyntheticUIEvent.js","./getEventModifierState":"/opt/app/node_modules/react/lib/getEventModifierState.js"}],"/opt/app/node_modules/react/lib/SyntheticUIEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27660,7 +27731,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
 
-},{"./SyntheticEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticEvent.js","./getEventTarget":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventTarget.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticWheelEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/opt/app/node_modules/react/lib/SyntheticEvent.js","./getEventTarget":"/opt/app/node_modules/react/lib/getEventTarget.js"}],"/opt/app/node_modules/react/lib/SyntheticWheelEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27721,7 +27792,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
 
-},{"./SyntheticMouseEvent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/SyntheticMouseEvent.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Transaction.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/opt/app/node_modules/react/lib/SyntheticMouseEvent.js"}],"/opt/app/node_modules/react/lib/Transaction.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -27962,7 +28033,7 @@ var Transaction = {
 module.exports = Transaction;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ViewportMetrics.js":[function(require,module,exports){
+},{"./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/ViewportMetrics.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27994,7 +28065,7 @@ var ViewportMetrics = {
 
 module.exports = ViewportMetrics;
 
-},{"./getUnboundedScrollPosition":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getUnboundedScrollPosition.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/accumulateInto.js":[function(require,module,exports){
+},{"./getUnboundedScrollPosition":"/opt/app/node_modules/react/lib/getUnboundedScrollPosition.js"}],"/opt/app/node_modules/react/lib/accumulateInto.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -28060,7 +28131,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/adler32.js":[function(require,module,exports){
+},{"./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/adler32.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28094,7 +28165,7 @@ function adler32(data) {
 
 module.exports = adler32;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/camelize.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/camelize.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28126,7 +28197,7 @@ function camelize(string) {
 
 module.exports = camelize;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/camelizeStyleName.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/camelizeStyleName.js":[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -28168,7 +28239,7 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-},{"./camelize":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/camelize.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/containsNode.js":[function(require,module,exports){
+},{"./camelize":"/opt/app/node_modules/react/lib/camelize.js"}],"/opt/app/node_modules/react/lib/containsNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28212,7 +28283,7 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-},{"./isTextNode":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isTextNode.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/createArrayFrom.js":[function(require,module,exports){
+},{"./isTextNode":"/opt/app/node_modules/react/lib/isTextNode.js"}],"/opt/app/node_modules/react/lib/createArrayFrom.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28298,7 +28369,7 @@ function createArrayFrom(obj) {
 
 module.exports = createArrayFrom;
 
-},{"./toArray":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/toArray.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/createFullPageComponent.js":[function(require,module,exports){
+},{"./toArray":"/opt/app/node_modules/react/lib/toArray.js"}],"/opt/app/node_modules/react/lib/createFullPageComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -28359,7 +28430,7 @@ function createFullPageComponent(tag) {
 module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
-},{"./ReactCompositeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactCompositeComponent.js","./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/createNodesFromMarkup.js":[function(require,module,exports){
+},{"./ReactCompositeComponent":"/opt/app/node_modules/react/lib/ReactCompositeComponent.js","./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/createNodesFromMarkup.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -28449,7 +28520,7 @@ function createNodesFromMarkup(markup, handleScript) {
 module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./createArrayFrom":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/createArrayFrom.js","./getMarkupWrap":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getMarkupWrap.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/dangerousStyleValue.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./createArrayFrom":"/opt/app/node_modules/react/lib/createArrayFrom.js","./getMarkupWrap":"/opt/app/node_modules/react/lib/getMarkupWrap.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/dangerousStyleValue.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28507,7 +28578,7 @@ function dangerousStyleValue(name, value) {
 
 module.exports = dangerousStyleValue;
 
-},{"./CSSProperty":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/CSSProperty.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/deprecated.js":[function(require,module,exports){
+},{"./CSSProperty":"/opt/app/node_modules/react/lib/CSSProperty.js"}],"/opt/app/node_modules/react/lib/deprecated.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -28558,7 +28629,7 @@ function deprecated(namespace, oldName, newName, ctx, fn) {
 module.exports = deprecated;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/Object.assign.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js":[function(require,module,exports){
+},{"./Object.assign":"/opt/app/node_modules/react/lib/Object.assign.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/emptyFunction.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28592,7 +28663,7 @@ emptyFunction.thatReturnsArgument = function(arg) { return arg; };
 
 module.exports = emptyFunction;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyObject.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/emptyObject.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -28616,7 +28687,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = emptyObject;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/escapeTextForBrowser.js":[function(require,module,exports){
+},{"_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/escapeTextForBrowser.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28657,7 +28728,7 @@ function escapeTextForBrowser(text) {
 
 module.exports = escapeTextForBrowser;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/flattenChildren.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/flattenChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -28726,7 +28797,7 @@ function flattenChildren(children) {
 module.exports = flattenChildren;
 
 }).call(this,require('_process'))
-},{"./ReactTextComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactTextComponent.js","./traverseAllChildren":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/traverseAllChildren.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/focusNode.js":[function(require,module,exports){
+},{"./ReactTextComponent":"/opt/app/node_modules/react/lib/ReactTextComponent.js","./traverseAllChildren":"/opt/app/node_modules/react/lib/traverseAllChildren.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/focusNode.js":[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -28755,7 +28826,7 @@ function focusNode(node) {
 
 module.exports = focusNode;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/forEachAccumulated.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/forEachAccumulated.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28786,7 +28857,7 @@ var forEachAccumulated = function(arr, cb, scope) {
 
 module.exports = forEachAccumulated;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getActiveElement.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/getActiveElement.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28815,7 +28886,7 @@ function getActiveElement() /*?DOMElement*/ {
 
 module.exports = getActiveElement;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventCharCode.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/getEventCharCode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28867,7 +28938,7 @@ function getEventCharCode(nativeEvent) {
 
 module.exports = getEventCharCode;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventKey.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/getEventKey.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28972,7 +29043,7 @@ function getEventKey(nativeEvent) {
 
 module.exports = getEventKey;
 
-},{"./getEventCharCode":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventCharCode.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventModifierState.js":[function(require,module,exports){
+},{"./getEventCharCode":"/opt/app/node_modules/react/lib/getEventCharCode.js"}],"/opt/app/node_modules/react/lib/getEventModifierState.js":[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -29019,7 +29090,7 @@ function getEventModifierState(nativeEvent) {
 
 module.exports = getEventModifierState;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getEventTarget.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/getEventTarget.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29050,7 +29121,7 @@ function getEventTarget(nativeEvent) {
 
 module.exports = getEventTarget;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getMarkupWrap.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/getMarkupWrap.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -29167,7 +29238,7 @@ function getMarkupWrap(nodeName) {
 module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29242,7 +29313,7 @@ function getNodeForCharacterOffset(root, offset) {
 
 module.exports = getNodeForCharacterOffset;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getReactRootElementInContainer.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/getReactRootElementInContainer.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29277,7 +29348,7 @@ function getReactRootElementInContainer(container) {
 
 module.exports = getReactRootElementInContainer;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getTextContentAccessor.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/getTextContentAccessor.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29314,7 +29385,7 @@ function getTextContentAccessor() {
 
 module.exports = getTextContentAccessor;
 
-},{"./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js"}],"/opt/app/node_modules/react/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29354,7 +29425,7 @@ function getUnboundedScrollPosition(scrollable) {
 
 module.exports = getUnboundedScrollPosition;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/hyphenate.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/hyphenate.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29387,7 +29458,7 @@ function hyphenate(string) {
 
 module.exports = hyphenate;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/hyphenateStyleName.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/hyphenateStyleName.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29428,7 +29499,7 @@ function hyphenateStyleName(string) {
 
 module.exports = hyphenateStyleName;
 
-},{"./hyphenate":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/hyphenate.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/instantiateReactComponent.js":[function(require,module,exports){
+},{"./hyphenate":"/opt/app/node_modules/react/lib/hyphenate.js"}],"/opt/app/node_modules/react/lib/instantiateReactComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -29542,7 +29613,7 @@ function instantiateReactComponent(element, parentCompositeType) {
 module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactEmptyComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactEmptyComponent.js","./ReactLegacyElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactLegacyElement.js","./ReactNativeComponent":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactNativeComponent.js","./warning":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js":[function(require,module,exports){
+},{"./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactEmptyComponent":"/opt/app/node_modules/react/lib/ReactEmptyComponent.js","./ReactLegacyElement":"/opt/app/node_modules/react/lib/ReactLegacyElement.js","./ReactNativeComponent":"/opt/app/node_modules/react/lib/ReactNativeComponent.js","./warning":"/opt/app/node_modules/react/lib/warning.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/invariant.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -29599,7 +29670,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isEventSupported.js":[function(require,module,exports){
+},{"_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/isEventSupported.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29664,7 +29735,7 @@ function isEventSupported(eventNameSuffix, capture) {
 
 module.exports = isEventSupported;
 
-},{"./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isNode.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js"}],"/opt/app/node_modules/react/lib/isNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29692,7 +29763,7 @@ function isNode(object) {
 
 module.exports = isNode;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isTextInputElement.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/isTextInputElement.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29736,7 +29807,7 @@ function isTextInputElement(elem) {
 
 module.exports = isTextInputElement;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isTextNode.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/isTextNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29761,7 +29832,7 @@ function isTextNode(object) {
 
 module.exports = isTextNode;
 
-},{"./isNode":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/isNode.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/joinClasses.js":[function(require,module,exports){
+},{"./isNode":"/opt/app/node_modules/react/lib/isNode.js"}],"/opt/app/node_modules/react/lib/joinClasses.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29802,7 +29873,7 @@ function joinClasses(className/*, ... */) {
 
 module.exports = joinClasses;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyMirror.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/keyMirror.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -29857,7 +29928,7 @@ var keyMirror = function(obj) {
 module.exports = keyMirror;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/keyOf.js":[function(require,module,exports){
+},{"./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/keyOf.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29893,7 +29964,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/mapObject.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/mapObject.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29946,7 +30017,7 @@ function mapObject(object, callback, context) {
 
 module.exports = mapObject;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/memoizeStringOnly.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/memoizeStringOnly.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29980,7 +30051,7 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/monitorCodeUse.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/monitorCodeUse.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -30014,7 +30085,7 @@ function monitorCodeUse(eventName, data) {
 module.exports = monitorCodeUse;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
+},{"./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -30054,7 +30125,7 @@ function onlyChild(children) {
 module.exports = onlyChild;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/performance.js":[function(require,module,exports){
+},{"./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/performance.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30082,7 +30153,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = performance || {};
 
-},{"./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/performanceNow.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js"}],"/opt/app/node_modules/react/lib/performanceNow.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30110,7 +30181,7 @@ var performanceNow = performance.now.bind(performance);
 
 module.exports = performanceNow;
 
-},{"./performance":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/performance.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/setInnerHTML.js":[function(require,module,exports){
+},{"./performance":"/opt/app/node_modules/react/lib/performance.js"}],"/opt/app/node_modules/react/lib/setInnerHTML.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30188,7 +30259,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setInnerHTML;
 
-},{"./ExecutionEnvironment":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/shallowEqual.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/opt/app/node_modules/react/lib/ExecutionEnvironment.js"}],"/opt/app/node_modules/react/lib/shallowEqual.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30232,7 +30303,7 @@ function shallowEqual(objA, objB) {
 
 module.exports = shallowEqual;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30270,7 +30341,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 
 module.exports = shouldUpdateReactComponent;
 
-},{}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/toArray.js":[function(require,module,exports){
+},{}],"/opt/app/node_modules/react/lib/toArray.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -30342,7 +30413,7 @@ function toArray(obj) {
 module.exports = toArray;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
+},{"./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -30525,7 +30596,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/ReactInstanceHandles.js","./invariant":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/invariant.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/warning.js":[function(require,module,exports){
+},{"./ReactElement":"/opt/app/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/opt/app/node_modules/react/lib/ReactInstanceHandles.js","./invariant":"/opt/app/node_modules/react/lib/invariant.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/lib/warning.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -30570,7 +30641,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/emptyFunction.js","_process":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/browserify/node_modules/process/browser.js"}],"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/react.js":[function(require,module,exports){
+},{"./emptyFunction":"/opt/app/node_modules/react/lib/emptyFunction.js","_process":"/opt/app/node_modules/browserify/node_modules/process/browser.js"}],"/opt/app/node_modules/react/react.js":[function(require,module,exports){
 module.exports = require('./lib/React');
 
-},{"./lib/React":"/Users/jorgesilvajetter/Sites/2015/rethink-chat/node_modules/react/lib/React.js"}]},{},["./client/src/js/main.js"]);
+},{"./lib/React":"/opt/app/node_modules/react/lib/React.js"}]},{},["./client/src/js/main.js"]);

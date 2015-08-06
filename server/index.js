@@ -21,6 +21,8 @@ app
 
 io.on('connection', function (socket) {
 
+  console.log('New Connection');
+
   r.table('messages')
     .orderBy({index: 'created'})
     .coerceTo('array')
@@ -38,6 +40,7 @@ io.on('connection', function (socket) {
         .changes().run(conn)
         .then(function(cursor) {
           cursor.each(function (err, row) {
+            console.log('Send New Message', row);
             socket.emit('message', row.new_val);
           }, function () {
             console.log('Finished');
@@ -47,6 +50,7 @@ io.on('connection', function (socket) {
 
   // Insert new messages
   socket.on('message', function (data) {
+    console.log('Receive New Message', data);
     r.table('messages').insert({
       message: data.message,
       user: data.userName,

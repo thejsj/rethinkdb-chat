@@ -11,14 +11,17 @@
  */
 var config = {
   'rethinkdb': {
-    'host': 'localhost',
+    'host': '0.0.0.0',
     'port': 28015,
     'db': 'rethink_chat'
   },
   'ports' : {
-    'http' : 8000
+    'http' : 9000
   },
-  'url': '127.0.0.1',
+  'client_ports' : {
+    'http' : 6080
+  },
+  'url': 'local.sandstrom.io',
 };
 
 module.exports = config;
