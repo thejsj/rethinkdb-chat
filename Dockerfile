@@ -5,7 +5,7 @@
 #
 
 # Pull base image.
-FROM dockerfile/nodejs
+FROM node
 
 # Set instructions on build.
 RUN npm install -g gulp bower node-sass
